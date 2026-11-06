@@ -1,0 +1,88 @@
+{
+  "run_id": "20261104T1518_nine-models",
+  "seed": 0,
+  "n_folds": 5,
+  "corpus": {
+    "rows": 66187,
+    "phishing": 28931,
+    "by_source": {
+      "b_commoncrawl": {
+        "size": 5000,
+        "phishing": 0
+      },
+      "b_feeds": {
+        "size": 5000,
+        "phishing": 5000
+      },
+      "b_tranco": {
+        "size": 3000,
+        "phishing": 0
+      },
+      "ebbu2017": {
+        "size": 10000,
+        "phishing": 5000
+      },
+      "hari_kaggle": {
+        "size": 10000,
+        "phishing": 5000
+      },
+      "kaggle_d1": {
+        "size": 10000,
+        "phishing": 5000
+      },
+      "lakh_kaggle": {
+        "size": 10000,
+        "phishing": 5000
+      },
+      "malibari_benign": {
+        "size": 5000,
+        "phishing": 0
+      },
+      "task_train": {
+        "size": 8187,
+        "phishing": 3931
+      }
+    }
+  },
+  "tuned_params": {
+    "log_reg": {
+      "C": 0.3
+    },
+    "svm": {
+      "C": 0.1
+    },
+    "naive_bayes": {
+      "var_smoothing": 1e-06
+    },
+    "knn": {
+      "weights": "distance",
+      "n_neighbors": 51
+    },
+    "decision_tree": {
+      "min_samples_leaf": 5,
+      "ccp_alpha": 0.001
+    },
+    "adaboost": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 1.0
+    },
+    "mlp": {
+      "alpha": 0.022096070868729552,
+      "hidden_layer_sizes": [
+        64
+      ],
+      "learning_rate_init": 0.0012221634728708944
+    },
+    "random_forest": {},
+    "xgboost": {}
+  },
+  "blend_members": [
+    "xgboost",
+    "mlp",
+    "random_forest"
+  ],
+  "threshold": 0.8865248226950354,
+  "threshold_rule": "calibrated blend score at the 99th percentile of out-of-fold legitimate URLs (validation FPR 1%)",
+  "n_features": 141
+}

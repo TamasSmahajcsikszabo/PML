@@ -1,0 +1,66 @@
+# suspicious_words.tsv: the suspicious words of Jalil, Usman and Fong (2023), Fig. 6, transcribed by hand (58 words; the paper gives no count and does not say
+# where the list comes from). The `group` column is MY judgment, not the paper's: it exists because the list mixes real phishing phrases with generic web and
+# CMS path words that look like a data-source property (see docs/plan_jalil2023_improvements.md, section 3).
+#   phrase  credential / urgency wording (matched as a substring of the decoded, lower-cased text)
+#   brand   a brand or brand script name (substring)
+#   host    free-hosting names (substring)
+#   kit     generic web / CMS path words, matched only as whole tokens (split on non-alphanumerics), because they are short and common
+word	group
+confirm	phrase
+account	phrase
+banking	phrase
+secure	phrase
+secured	phrase
+securewebsession	phrase
+login	phrase
+signin	phrase
+signout	phrase
+logout	phrase
+update	phrase
+click	phrase
+password	phrase
+verify	phrase
+verification	phrase
+lucky	phrase
+bonus	phrase
+suspend	phrase
+limited	phrase
+submit	phrase
+recovery	phrase
+restore	phrase
+refund	phrase
+giveaway	phrase
+dispute	phrase
+billing	phrase
+temporary	phrase
+required	phrase
+resolution	phrase
+myaccount	phrase
+redirectme	phrase
+servico	phrase
+review	phrase
+browser	phrase
+webscr	phrase
+paypal	brand
+alibaba	brand
+dropbox	brand
+ebayisapi	brand
+webhostapp	host
+000webhostapp	host
+webnode	host
+webspace	host
+webservis	host
+wordpress	kit
+includes	kit
+themes	kit
+plugins	kit
+wp	kit
+content	kit
+site	kit
+images	kit
+js	kit
+css	kit
+view	kit
+admin	kit
+server	kit
+client	kit

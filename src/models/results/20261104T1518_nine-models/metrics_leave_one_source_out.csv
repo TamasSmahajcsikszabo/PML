@@ -1,0 +1,6 @@
+held_out_source,n,xgboost_auc_trained_on_other_sources
+ebbu2017,10000,0.98698
+hari_kaggle,10000,0.959719
+kaggle_d1,10000,0.976321
+lakh_kaggle,10000,0.983564
+task_train,8187,0.956952

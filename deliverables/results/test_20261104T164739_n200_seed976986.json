@@ -1,0 +1,12 @@
+{
+  "seed": 976986,
+  "n": 200,
+  "phishing": 10,
+  "TP": 9,
+  "FP": 3,
+  "FN": 1,
+  "TN": 187,
+  "threshold": 0.8865248226950354,
+  "mode": "vote",
+  "run": "20261104T1518_nine-models"
+}

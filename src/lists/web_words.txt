@@ -1,0 +1,2 @@
+# ubiquitous URL vocabulary missing from English dictionaries; counted as legible words
+www http https com org net edu gov html htm php asp aspx jsp css js json xml cgi bin img images image static assets cdn api app apps wp content includes themes plugins uploads admin login signin signup logout index home main default webmail email mail www2 ftp ssl vpn url uri http2 mobi info biz blog shop store cloud online site web page pages portal secure account update verify confirm support service services billing payment paypal

@@ -1,0 +1,26 @@
+# brand_stoplist.txt: labels removed from brands.txt before the brand rules run. HAND-WRITTEN JUDGMENT on the word, not on how it splits the classes:
+# plain dictionary words that are far too common in ordinary sub-domains and paths (a rule that flags `cloud.example.com` or `/forms/` is noise).
+# Some are real brands (office, live, windows, android); they are generic as tokens. Edit with care and record why in docs/process.md.
+cloud
+static
+forms
+archive
+pages
+example
+name
+weather
+nature
+medium
+branch
+launchpad
+mail
+video
+line
+browser
+online
+office
+live
+windows
+android
+europa
+clarity

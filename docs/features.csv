@@ -1,0 +1,142 @@
+group;name;definition;log1p;importance_mean;importance_std;mean_rank
+1 Scheme and host (ANTLR grammar);www;1 if the first host label is www;False;0.0162743;0.0112477;7.77778
+1 Scheme and host (ANTLR grammar);https;1 if the URL starts with https://;False;0.0118824;0.00757561;10
+1 Scheme and host (ANTLR grammar);host_len;host length (L);True;0.00439005;0.0050052;30.8889
+1 Scheme and host (ANTLR grammar);n_sub;number of subdomains (L);True;0.00126898;0.00180829;57.6667
+1 Scheme and host (ANTLR grammar);sfx_icann2;1 if the suffix has two labels (co.uk, com.br);False;0.00115988;0.000985573;46.3333
+1 Scheme and host (ANTLR grammar);sfx_platform;1 if the suffix is a hosting platform (tenant.workers.dev, blogspot.com...);False;0.00109784;0.00280616;88.1111
+1 Scheme and host (ANTLR grammar);reg_len;registrable-label length (L);True;0.00108504;0.00125961;64.7222
+1 Scheme and host (ANTLR grammar);host_ipv4;1 if the host is an IPv4 address;False;0.000786131;0.0020223;90.5556
+1 Scheme and host (ANTLR grammar);reg_digits;digits in the registrable label (L);True;0.000536355;0.000897038;80.6667
+1 Scheme and host (ANTLR grammar);port;1 if an explicit port is given;False;0.000436309;0.000604613;70.7222
+1 Scheme and host (ANTLR grammar);host_other;1 if the host has an unknown suffix (localhost, odd TLD);False;0.000226894;0.000236573;85.3333
+1 Scheme and host (ANTLR grammar);reg_hyphens;hyphens in the registrable label (L);True;0.000209919;0.000301403;89.8333
+1 Scheme and host (ANTLR grammar);punycode;count of punycode (xn--) host labels;False;7.42429e-05;0.000117846;93.3889
+1 Scheme and host (ANTLR grammar);sfx_platform_bare;1 if the host is exactly a platform with no tenant;False;4.36258e-05;0.000111615;111.5
+1 Scheme and host (ANTLR grammar);host_platform;1 if the host is a bare hosting platform (e.g. s3.amazonaws.com, no tenant);False;4.07029e-05;0.000110729;111.722
+1 Scheme and host (ANTLR grammar);ftp;1 if the scheme is ftp;False;0;0;114.722
+1 Scheme and host (ANTLR grammar);userinfo;1 if the URL has user@ before the host;False;0;0;114.722
+10 Obfuscation (research papers);ratio_delims_url;F3-set characters / URL length;False;0.0178547;0.0230383;16.8889
+10 Obfuscation (research papers);ratio_nonalnum_url;non-alphanumeric characters / URL length;False;0.0154732;0.016294;13.2222
+10 Obfuscation (research papers);ratio_dot_url;dots / URL length;False;0.0125996;0.0184053;37.6667
+10 Obfuscation (research papers);ratio_hyphen_url;hyphens / URL length;False;0.00243352;0.00319739;38.6667
+10 Obfuscation (research papers);host_digit_in_word;1 if a host token mixes letters and digits;False;0.00174212;0.00246126;67
+10 Obfuscation (research papers);ratio_nonalnum_host;non-alphanumeric characters / host length;False;0.00139825;0.00191623;59.3333
+10 Obfuscation (research papers);ratio_other_url;F4-set characters / URL length;False;0.000846246;0.00100633;62.2222
+10 Obfuscation (research papers);host_n_scripts;number of Unicode scripts among host letters;False;0.000821464;0.00203044;87
+10 Obfuscation (research papers);brand_lookalike_host;a host token equals a brand only after that mapping;False;3.80275e-05;4.86535e-05;103.833
+10 Obfuscation (research papers);brand_lookalike_reg;registrable label equals a brand only after mapping look-alikes (0->o, rn->m, Cyrillic a);False;6.45782e-06;1.45336e-05;110.056
+10 Obfuscation (research papers);host_confusable_chars;look-alike non-Latin characters in the host;False;0;0;114.722
+10 Obfuscation (research papers);host_mixed_script;1 if the host mixes scripts (Latin + Cyrillic...);False;0;0;114.722
+11 Popularity;reg_log_rank;"log10 of the registrable domain's Tranco rank (top 500k; 6 if absent)";False;0.0479725;0.0470511;5.66667
+2 Path, query, fragment (ANTLR grammar);n_seg;number of path segments (L);True;0.0193532;0.032281;34
+2 Path, query, fragment (ANTLR grammar);max_seg_len;longest path segment (L);True;0.00876626;0.0125538;33.5
+2 Path, query, fragment (ANTLR grammar);url_len;URL length in characters (L);True;0.0054199;0.00851243;34.2222
+2 Path, query, fragment (ANTLR grammar);has_path;1 if there is a path beyond the host;False;0.00371675;0.00615634;69.2222
+2 Path, query, fragment (ANTLR grammar);n_amp_esc;"count of HTML-escaped &amp; separators";False;0.00220894;0.00339839;48.2778
+2 Path, query, fragment (ANTLR grammar);has_query;1 if there is a query string;False;0.00187768;0.00306925;75.3333
+2 Path, query, fragment (ANTLR grammar);trailing_slash;1 if the path ends with /;False;0.00132161;0.00124666;45.1111
+2 Path, query, fragment (ANTLR grammar);path_len;path length (L);True;0.00123452;0.00123593;59
+2 Path, query, fragment (ANTLR grammar);query_len;query length (L);True;0.000633483;0.000852804;69.2222
+2 Path, query, fragment (ANTLR grammar);n_email;count of e-mail addresses in path/query/fragment;False;0.00062796;0.00165949;89.3889
+2 Path, query, fragment (ANTLR grammar);n_empty_val;query pairs with an empty value (L);True;0.000612955;0.00104115;75.3889
+2 Path, query, fragment (ANTLR grammar);n_nested;count of URLs embedded in the query;False;0.000427461;0.00103686;94.3889
+2 Path, query, fragment (ANTLR grammar);n_empty_seg;empty path segments, e.g. // (L);True;0.000315114;0.000385297;76.0556
+2 Path, query, fragment (ANTLR grammar);pct_total;count of %XX escapes;False;0.000243789;0.000242134;76.1111
+2 Path, query, fragment (ANTLR grammar);has_ext;1 if the last segment ends in a known file extension;False;0.000225548;0.000368599;81.7778
+2 Path, query, fragment (ANTLR grammar);n_pairs;number of query key/value pairs (L);True;0.000143028;0.000239161;99.7778
+2 Path, query, fragment (ANTLR grammar);has_frag;1 if there is a #fragment;False;0.000131018;0.000338936;106.944
+2 Path, query, fragment (ANTLR grammar);frag_len;fragment length (L);True;0.000110183;0.000322835;109.611
+2 Path, query, fragment (ANTLR grammar);stray_pct;count of invalid % signs;False;2.823e-05;3.28419e-05;105.5
+3 Text values (grammar pieces + regex);host_digit_rate;share of digits in the host;False;0.00635471;0.00545112;21.7778
+3 Text values (grammar pieces + regex);n_dash_host;hyphens in the host (L);True;0.00527394;0.0079104;28.6667
+3 Text values (grammar pieces + regex);longest_digit_run;longest run of consecutive digits (L);True;0.00213268;0.00303508;44.7778
+3 Text values (grammar pieces + regex);emb_domain;1 if a host name with a known TLD is embedded in path/query/fragment;False;0.00207946;0.00370122;45.9444
+3 Text values (grammar pieces + regex);mean_seg_len;mean path-segment length;False;0.0018294;0.00183613;38.6667
+3 Text values (grammar pieces + regex);emb_hex;1 if a 16+ hex string or a UUID is embedded;False;0.00164113;0.00338298;64.1111
+3 Text values (grammar pieces + regex);n_dash_url;hyphens in the URL (L);True;0.00164091;0.00237821;62.2778
+3 Text values (grammar pieces + regex);n_at;@ signs in the URL (L);True;0.00157344;0.00199541;46.0556
+3 Text values (grammar pieces + regex);url_digit_rate;share of digits in the URL;False;0.000977454;0.000631139;42.4444
+3 Text values (grammar pieces + regex);path_digit_rate;share of digits in the path;False;0.00079619;0.00131664;65.7222
+3 Text values (grammar pieces + regex);rep_char_host;1 if a character repeats 3+ times in a host label (www ignored);False;0.000669382;0.00153062;88.8889
+3 Text values (grammar pieces + regex);max_label_len;longest host label (L);True;0.000660974;0.000639555;57.1667
+3 Text values (grammar pieces + regex);n_dots_host;dots in the host (L);True;0.000634967;0.000801536;69.5556
+3 Text values (grammar pieces + regex);max_qval_len;longest query value (L);True;0.000549651;0.000588215;64.7222
+3 Text values (grammar pieces + regex);mean_qval_len;mean query-value length;False;0.000508235;0.00101768;72.3889
+3 Text values (grammar pieces + regex);n_underscore;underscores in the URL (L);True;0.000427522;0.000604225;68.5
+3 Text values (grammar pieces + regex);rep_char_query;1 if a character repeats 3+ times in a query piece;False;0.000385837;0.000726548;91.6667
+3 Text values (grammar pieces + regex);rep_char_path;1 if a character repeats 3+ times in a path segment;False;0.000265101;0.000262849;84.4444
+3 Text values (grammar pieces + regex);max_qkey_len;longest query key (L);True;0.000208379;0.000250248;78.1667
+3 Text values (grammar pieces + regex);query_digit_rate;share of digits in the query;False;0.000130874;0.000257599;83.2778
+3 Text values (grammar pieces + regex);rep_digit;1 if a digit repeats 3+ times anywhere;False;0.000103011;0.000299052;97.8889
+3 Text values (grammar pieces + regex);emb_ip;1 if an IPv4 address is embedded in path/query/fragment or host;False;2.97367e-05;4.44558e-05;104.056
+3 Text values (grammar pieces + regex);non_ascii;1 if any non-ASCII character;False;2.7116e-06;5.35532e-05;108.056
+3 Text values (grammar pieces + regex);emb_port;1 if host:port is embedded;False;0;0;114.722
+4 Entropy (lexical);ent_path;entropy of the path;False;0.0116681;0.0226565;55.1111
+4 Entropy (lexical);ent_url;Shannon entropy of the URL (bits/char);False;0.0111913;0.021369;51.6667
+4 Entropy (lexical);ent_url_norm;URL entropy / log2(length);False;0.00288282;0.0051416;63
+4 Entropy (lexical);ent_path_norm;path entropy / log2(length);False;0.00145189;0.00204843;60.6667
+4 Entropy (lexical);ent_max_seg;highest entropy of any path segment;False;0.000959526;0.00118354;53.3889
+4 Entropy (lexical);ent_reg;entropy of the registrable label (domain hosts only);False;0.000397382;0.000376141;72.6667
+4 Entropy (lexical);ent_max_qval;highest entropy of any query value;False;0.000393267;0.000309782;59.6667
+5 Special characters (lexical);sc_other_query;"count of + $ = & . : # % (paper F4 set; L) in the query";True;0.00202777;0.0035922;77.8333
+5 Special characters (lexical);sc_delims_query;"count of the characters ~`!^*()[]{}""';:,><| (paper F3 set; L) in the query";True;0.00166018;0.00344298;66.1667
+5 Special characters (lexical);sc_delims_url;"count of the characters ~`!^*()[]{}""';:,><| (paper F3 set; L) in the url";True;0.00145585;0.00204405;60.1667
+5 Special characters (lexical);sc_other_url;"count of + $ = & . : # % (paper F4 set; L) in the url";True;0.0012138;0.00208742;64.3333
+5 Special characters (lexical);sc_other_host;"count of + $ = & . : # % (paper F4 set; L) in the host";True;0.000569314;0.00075224;79.6667
+5 Special characters (lexical);sc_other_path;"count of + $ = & . : # % (paper F4 set; L) in the path";True;0.000416382;0.000543233;73.4444
+5 Special characters (lexical);sc_delims_host;"count of the characters ~`!^*()[]{}""';:,><| (paper F3 set; L) in the host";True;0.000388165;0.000644217;83.5556
+5 Special characters (lexical);sc_delims_path;"count of the characters ~`!^*()[]{}""';:,><| (paper F3 set; L) in the path";True;-1.68303e-05;0.000188139;113.611
+6 Suspicious words (lexical);sw_phrase_url;"distinct phishing phrases (login, secure, verify, account, ...; L) in the url";True;0.0117162;0.00867442;8.88889
+6 Suspicious words (lexical);sw_brand_url;distinct brand words from the paper list in the URL (L);True;0.00487893;0.00531096;28.7222
+6 Suspicious words (lexical);sw_kit_path;distinct CMS/kit words as whole tokens in the path only (L);True;0.00457774;0.00440445;21.2222
+6 Suspicious words (lexical);sw_kit_url;distinct CMS/kit words (wp, content, includes, themes, admin...) as whole tokens in the URL (L);True;0.00396998;0.00332441;20.4444
+6 Suspicious words (lexical);sw_phrase_path;"distinct phishing phrases (login, secure, verify, account, ...; L) in the path";True;0.00193121;0.00387197;53.5
+6 Suspicious words (lexical);sw_host_url;distinct free-hosting words (webhostapp...) in the URL (L);True;0.00173787;0.00174408;51.9444
+6 Suspicious words (lexical);sw_phrase_query;"distinct phishing phrases (login, secure, verify, account, ...; L) in the query";True;0.0016448;0.0044536;82
+6 Suspicious words (lexical);sw_phrase_host;"distinct phishing phrases (login, secure, verify, account, ...; L) in the host";True;0.00150132;0.00379206;69.1667
+7 Brand rules (lexical, Tranco top-500 brands);brand_in_path;distinct brands in the path (L);True;0.00288064;0.00307159;24.6667
+7 Brand rules (lexical, Tranco top-500 brands);reg_popular;1 if the registrable domain is in the Tranco top 50,000;False;0.00185445;0.00226327;58.6667
+7 Brand rules (lexical, Tranco top-500 brands);brand_in_sub;distinct brand names in subdomains (L);True;0.00143408;0.0025406;53.0556
+7 Brand rules (lexical, Tranco top-500 brands);brand_in_reg;brand + extra characters in the registrable label;False;0.000601809;0.00103279;66.8333
+7 Brand rules (lexical, Tranco top-500 brands);brand_in_query;distinct brands in the query (L);True;0.00019034;0.000502605;99.1667
+7 Brand rules (lexical, Tranco top-500 brands);brand_typo;registrable label one edit from a brand (typosquat);False;3.43141e-05;8.92987e-05;112.222
+7 Brand rules (lexical, Tranco top-500 brands);brand_wrong_tld;brand label on a different suffix (paypal.tk);False;-0.000161961;0.000609608;104.722
+8 Shorteners and misc URL counts (lexical);n_hyphens_path;hyphens in the path (L);True;0.00658818;0.00881582;21
+8 Shorteners and misc URL counts (lexical);n_eq_url;count of = (L);True;0.00303247;0.00445206;53.2778
+8 Shorteners and misc URL counts (lexical);is_shortener;1 if the host is a URL shortener;False;0.00149107;0.00122577;37.1111
+8 Shorteners and misc URL counts (lexical);n_dots_path;dots in the path (L);True;0.00128542;0.00114722;44.1111
+8 Shorteners and misc URL counts (lexical);http_after_host;occurrences of 'http' after the host (L);True;0.000926617;0.00172126;69.1111
+8 Shorteners and misc URL counts (lexical);www_after_host;occurrences of 'www' after the host (L);True;0.000840549;0.00233711;96.8889
+8 Shorteners and misc URL counts (lexical);n_amp_url;count of & (L);True;0.000740381;0.000921912;72.8889
+8 Shorteners and misc URL counts (lexical);amp_gt_eq;1 if there are more & than = (paper F2);False;0.000554605;0.00095589;81.5556
+8 Shorteners and misc URL counts (lexical);www_extra_label;host labels after the first that start with www (L);True;5.86329e-05;9.39903e-05;102.167
+8 Shorteners and misc URL counts (lexical);shortener_in_url;1 if a shortener domain appears inside the URL;False;2.7301e-05;5.42233e-05;105.278
+"9 Readability (from the other repo; English dictionary)";url_legibility;share of URL letters covered by dictionary words;False;0.0103412;0.00688407;11.3333
+"9 Readability (from the other repo; English dictionary)";url_leet;share of characters that are digits next to letters (g00gle);False;0.00613796;0.00480848;17.8889
+"9 Readability (from the other repo; English dictionary)";tld_suspicious;1 if the TLD is on the abused list (tk, ml, xyz, top...);False;0.00449194;0.00442245;17.6667
+"9 Readability (from the other repo; English dictionary)";seg_max_leet;highest leet share of any path segment;False;0.00190776;0.0011527;30.2222
+"9 Readability (from the other repo; English dictionary)";host_leet;share of host characters that are digits next to letters;False;0.00168101;0.00289579;61.5
+"9 Readability (from the other repo; English dictionary)";seg_consonant_run;longest consonant run in any path segment;False;0.00133217;0.00102059;45.6667
+"9 Readability (from the other repo; English dictionary)";tld_cc;1 if the TLD is a 2-letter country code;False;0.00119454;0.00129212;46.5556
+"9 Readability (from the other repo; English dictionary)";host_legibility;share of host letters covered by dictionary words;False;0.00104009;0.000619807;43.5556
+"9 Readability (from the other repo; English dictionary)";sld_legibility;share of registrable-label letters covered by dictionary words;False;0.00075213;0.00102616;64.6667
+"9 Readability (from the other repo; English dictionary)";seg_min_legibility;lowest legibility of any path segment;False;0.000476373;0.000359457;58.8333
+"9 Readability (from the other repo; English dictionary)";sld_leet;share of registrable-label characters that are digits next to letters;False;0.000286772;0.00039916;87.6111
+"9 Readability (from the other repo; English dictionary)";qval_min_legibility;lowest legibility of any query value;False;0.000219877;0.000420694;81.0556
+"9 Readability (from the other repo; English dictionary)";seg_max_typo;highest typo rate of any path segment;False;0.000199693;0.000289069;80.7222
+"9 Readability (from the other repo; English dictionary)";sld_consonant_run;longest consonant run in the registrable label;False;0.000102031;0.000137868;94.9444
+"9 Readability (from the other repo; English dictionary)";url_typo_rate;share of URL letters in unreadable runs within one edit of a word;False;5.14068e-05;0.000101245;104.167
+"9 Readability (from the other repo; English dictionary)";sld_vowel_ratio;vowel share of registrable-label letters;False;3.59569e-05;0.000118411;108
+"9 Readability (from the other repo; English dictionary)";host_typo_rate;share of host letters in unreadable runs within one edit of a word;False;3.08268e-05;0.000176104;111.778
+"9 Readability (from the other repo; English dictionary)";sld_typo_rate;share of registrable-label letters in unreadable runs within one edit of a word;False;2.91054e-05;9.02818e-05;111.667
+"9 Readability (from the other repo; English dictionary)";tld_has_digit;1 if the TLD contains a digit;False;2.34629e-05;4.4512e-05;111.222
+"9 Readability (from the other repo; English dictionary)";qval_max_typo;highest typo rate of any query value;False;1.71838e-05;8.05336e-05;104.167
+"9 Readability (from the other repo; English dictionary)";ext_asp;1 if the file extension is .asp;False;0;0;114.722
+"9 Readability (from the other repo; English dictionary)";ext_aspx;1 if the file extension is .aspx;False;0;0;114.722
+"9 Readability (from the other repo; English dictionary)";ext_exe;1 if the file extension is .exe;False;0;0;114.722
+"9 Readability (from the other repo; English dictionary)";ext_htm;1 if the file extension is .htm;False;0;0;114.722
+"9 Readability (from the other repo; English dictionary)";ext_html;1 if the file extension is .html;False;0;0;114.722
+"9 Readability (from the other repo; English dictionary)";ext_jsp;1 if the file extension is .jsp;False;0;0;114.722
+"9 Readability (from the other repo; English dictionary)";ext_php;1 if the file extension is .php;False;0;0;114.722
+"9 Readability (from the other repo; English dictionary)";ext_zip;1 if the file extension is .zip;False;0;0;114.722

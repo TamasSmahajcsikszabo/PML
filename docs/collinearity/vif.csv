@@ -1,0 +1,140 @@
+feature;group;vif
+sc_other_host;5 Special characters (lexical);12035.63
+n_dots_host;3 Text values (grammar pieces + regex);11968.25
+path_len;2 Path, query, fragment (ANTLR grammar);894.05
+has_path;2 Path, query, fragment (ANTLR grammar);403.17
+ent_path;4 Entropy (lexical);394.54
+ent_path_norm;4 Entropy (lexical);269.64
+host_ipv4;1 Scheme and host (ANTLR grammar);213.57
+host_n_scripts;10 Obfuscation (research papers);206.88
+query_len;2 Path, query, fragment (ANTLR grammar);194.52
+url_len;2 Path, query, fragment (ANTLR grammar);142.80
+sc_delims_url;5 Special characters (lexical);136.02
+n_pairs;2 Path, query, fragment (ANTLR grammar);119.37
+max_seg_len;2 Path, query, fragment (ANTLR grammar);105.12
+ent_max_seg;4 Entropy (lexical);95.76
+sc_delims_query;5 Special characters (lexical);95.20
+max_qval_len;3 Text values (grammar pieces + regex);75.25
+has_query;2 Path, query, fragment (ANTLR grammar);74.97
+sc_other_url;5 Special characters (lexical);65.44
+n_sub;1 Scheme and host (ANTLR grammar);64.69
+n_seg;2 Path, query, fragment (ANTLR grammar);54.21
+sc_other_query;5 Special characters (lexical);51.69
+ent_max_qval;4 Entropy (lexical);46.94
+host_len;1 Scheme and host (ANTLR grammar);44.10
+ent_url;4 Entropy (lexical);41.02
+ratio_other_url;10 Obfuscation (research papers);36.29
+sc_delims_path;5 Special characters (lexical);35.67
+n_amp_url;8 Shorteners and misc URL counts (lexical);33.63
+sc_other_path;5 Special characters (lexical);28.72
+n_dash_url;3 Text values (grammar pieces + regex);27.09
+ent_url_norm;4 Entropy (lexical);26.86
+sw_phrase_url;6 Suspicious words (lexical);24.93
+max_qkey_len;3 Text values (grammar pieces + regex);23.97
+n_hyphens_path;8 Shorteners and misc URL counts (lexical);20.87
+max_label_len;3 Text values (grammar pieces + regex);20.35
+n_eq_url;8 Shorteners and misc URL counts (lexical);18.87
+ratio_nonalnum_host;10 Obfuscation (research papers);18.29
+sw_kit_path;6 Suspicious words (lexical);17.70
+sw_kit_url;6 Suspicious words (lexical);17.32
+ratio_dot_url;10 Obfuscation (research papers);17.03
+reg_len;1 Scheme and host (ANTLR grammar);17.02
+n_dots_path;8 Shorteners and misc URL counts (lexical);16.39
+ratio_hyphen_url;10 Obfuscation (research papers);16.32
+ratio_delims_url;10 Obfuscation (research papers);14.48
+sw_phrase_path;6 Suspicious words (lexical);13.85
+has_ext;2 Path, query, fragment (ANTLR grammar);13.77
+ratio_nonalnum_url;10 Obfuscation (research papers);12.55
+url_digit_rate;3 Text values (grammar pieces + regex);11.63
+host_digit_rate;3 Text values (grammar pieces + regex);11.10
+n_dash_host;3 Text values (grammar pieces + regex);9.84
+host_legibility;"9 Readability (from the other repo; English dictionary)";9.13
+sfx_icann2;1 Scheme and host (ANTLR grammar);8.51
+url_leet;"9 Readability (from the other repo; English dictionary)";8.24
+frag_len;2 Path, query, fragment (ANTLR grammar);8.22
+ent_reg;4 Entropy (lexical);8.03
+has_frag;2 Path, query, fragment (ANTLR grammar);7.95
+host_typo_rate;"9 Readability (from the other repo; English dictionary)";7.77
+qval_min_legibility;"9 Readability (from the other repo; English dictionary)";7.47
+sw_phrase_host;6 Suspicious words (lexical);6.79
+mean_seg_len;3 Text values (grammar pieces + regex);6.57
+sfx_platform;1 Scheme and host (ANTLR grammar);6.56
+host_leet;"9 Readability (from the other repo; English dictionary)";6.44
+longest_digit_run;3 Text values (grammar pieces + regex);6.07
+sld_typo_rate;"9 Readability (from the other repo; English dictionary)";6.01
+sld_legibility;"9 Readability (from the other repo; English dictionary)";5.83
+path_digit_rate;3 Text values (grammar pieces + regex);5.82
+ext_html;"9 Readability (from the other repo; English dictionary)";5.45
+ext_php;"9 Readability (from the other repo; English dictionary)";5.31
+reg_log_rank;11 Popularity;5.17
+url_legibility;"9 Readability (from the other repo; English dictionary)";4.74
+query_digit_rate;3 Text values (grammar pieces + regex);4.56
+reg_digits;1 Scheme and host (ANTLR grammar);4.48
+reg_popular;7 Brand rules (lexical, Tranco top-500 brands);4.39
+reg_hyphens;1 Scheme and host (ANTLR grammar);4.16
+host_digit_in_word;10 Obfuscation (research papers);4.15
+n_email;2 Path, query, fragment (ANTLR grammar);4.03
+sld_leet;"9 Readability (from the other repo; English dictionary)";4.01
+n_at;3 Text values (grammar pieces + regex);3.77
+n_amp_esc;2 Path, query, fragment (ANTLR grammar);3.72
+host_confusable_chars;10 Obfuscation (research papers);3.71
+url_typo_rate;"9 Readability (from the other repo; English dictionary)";3.59
+sw_phrase_query;6 Suspicious words (lexical);3.52
+seg_max_leet;"9 Readability (from the other repo; English dictionary)";3.36
+seg_consonant_run;"9 Readability (from the other repo; English dictionary)";3.35
+www;1 Scheme and host (ANTLR grammar);3.32
+emb_hex;3 Text values (grammar pieces + regex);3.31
+port;1 Scheme and host (ANTLR grammar);3.30
+seg_min_legibility;"9 Readability (from the other repo; English dictionary)";3.14
+mean_qval_len;3 Text values (grammar pieces + regex);3.04
+ext_htm;"9 Readability (from the other repo; English dictionary)";2.85
+rep_digit;3 Text values (grammar pieces + regex);2.62
+emb_domain;3 Text values (grammar pieces + regex);2.58
+rep_char_path;3 Text values (grammar pieces + regex);2.43
+http_after_host;8 Shorteners and misc URL counts (lexical);2.35
+tld_cc;"9 Readability (from the other repo; English dictionary)";2.30
+sld_consonant_run;"9 Readability (from the other repo; English dictionary)";2.28
+n_underscore;3 Text values (grammar pieces + regex);2.25
+sld_vowel_ratio;"9 Readability (from the other repo; English dictionary)";2.22
+sc_delims_host;5 Special characters (lexical);2.17
+n_nested;2 Path, query, fragment (ANTLR grammar);2.15
+trailing_slash;2 Path, query, fragment (ANTLR grammar);2.11
+seg_max_typo;"9 Readability (from the other repo; English dictionary)";2.08
+www_after_host;8 Shorteners and misc URL counts (lexical);2.03
+pct_total;2 Path, query, fragment (ANTLR grammar);2.01
+sw_brand_url;6 Suspicious words (lexical);1.94
+punycode;1 Scheme and host (ANTLR grammar);1.84
+rep_char_query;3 Text values (grammar pieces + regex);1.82
+tld_has_digit;"9 Readability (from the other repo; English dictionary)";1.82
+amp_gt_eq;8 Shorteners and misc URL counts (lexical);1.74
+https;1 Scheme and host (ANTLR grammar);1.66
+brand_in_sub;7 Brand rules (lexical, Tranco top-500 brands);1.61
+brand_in_path;7 Brand rules (lexical, Tranco top-500 brands);1.61
+ext_aspx;"9 Readability (from the other repo; English dictionary)";1.51
+sw_host_url;6 Suspicious words (lexical);1.49
+rep_char_host;3 Text values (grammar pieces + regex);1.49
+n_empty_val;2 Path, query, fragment (ANTLR grammar);1.47
+brand_lookalike_reg;10 Obfuscation (research papers);1.41
+brand_lookalike_host;10 Obfuscation (research papers);1.41
+host_other;1 Scheme and host (ANTLR grammar);1.34
+ext_asp;"9 Readability (from the other repo; English dictionary)";1.31
+qval_max_typo;"9 Readability (from the other repo; English dictionary)";1.21
+brand_in_query;7 Brand rules (lexical, Tranco top-500 brands);1.20
+ext_jsp;"9 Readability (from the other repo; English dictionary)";1.18
+tld_suspicious;"9 Readability (from the other repo; English dictionary)";1.17
+is_shortener;8 Shorteners and misc URL counts (lexical);1.10
+ext_exe;"9 Readability (from the other repo; English dictionary)";1.08
+non_ascii;3 Text values (grammar pieces + regex);1.05
+brand_in_reg;7 Brand rules (lexical, Tranco top-500 brands);1.04
+brand_wrong_tld;7 Brand rules (lexical, Tranco top-500 brands);1.04
+emb_ip;3 Text values (grammar pieces + regex);1.04
+brand_typo;7 Brand rules (lexical, Tranco top-500 brands);1.02
+n_empty_seg;2 Path, query, fragment (ANTLR grammar);1.02
+ext_zip;"9 Readability (from the other repo; English dictionary)";1.02
+shortener_in_url;8 Shorteners and misc URL counts (lexical);1.02
+www_extra_label;8 Shorteners and misc URL counts (lexical);1.02
+stray_pct;2 Path, query, fragment (ANTLR grammar);1.01
+emb_port;3 Text values (grammar pieces + regex);1.01
+ftp;1 Scheme and host (ANTLR grammar);1.00
+sfx_platform_bare;1 Scheme and host (ANTLR grammar);0.29
+host_platform;1 Scheme and host (ANTLR grammar);0.29

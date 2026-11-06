@@ -1,0 +1,51 @@
+{
+  "run_id": "20261104T1417_nine-models",
+  "seed": 0,
+  "n_folds": 5,
+  "cleaning": {
+    "rows": 8651,
+    "exact_duplicate_rows": 80,
+    "conflicting_label_rows": 107,
+    "same_label_duplicates_after_conflicts_removed": 219,
+    "kept": 8325
+  },
+  "tuned_params": {
+    "log_reg": {
+      "C": 0.1
+    },
+    "svm": {
+      "C": 0.03
+    },
+    "naive_bayes": {},
+    "knn": {
+      "weights": "distance",
+      "n_neighbors": 51
+    },
+    "decision_tree": {
+      "min_samples_leaf": 20,
+      "ccp_alpha": 0.001
+    },
+    "adaboost": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.5
+    },
+    "mlp": {
+      "alpha": 0.022096070868729552,
+      "hidden_layer_sizes": [
+        64
+      ],
+      "learning_rate_init": 0.0012221634728708944
+    },
+    "random_forest": {},
+    "xgboost": {}
+  },
+  "blend_members": [
+    "mlp",
+    "xgboost",
+    "random_forest"
+  ],
+  "threshold": 0.9389312977099237,
+  "threshold_rule": "calibrated blend score at the 99th percentile of out-of-fold legitimate URLs (validation FPR 1%)",
+  "n_features": 140
+}

@@ -1,0 +1,13 @@
+cluster;size;features;most_important;groups
+C6;10;ent_max_qval, has_query, max_qkey_len, max_qval_len, mean_qval_len, n_eq_url, n_pairs, query_len, qval_min_legibility, sc_other_query;n_eq_url;"2 Path, query, fragment (ANTLR grammar); 3 Text values (grammar pieces + regex); 4 Entropy (lexical); 5 Special characters (lexical); 8 Shorteners and misc URL counts (lexical); 9 Readability (from the other repo; English dictionary)"
+C4;5;ent_max_seg, ent_path, max_seg_len, mean_seg_len, path_len;ent_path;"2 Path, query, fragment (ANTLR grammar); 3 Text values (grammar pieces + regex); 4 Entropy (lexical)"
+C5;3;has_ext, n_dots_path, sc_other_path;n_dots_path;"2 Path, query, fragment (ANTLR grammar); 5 Special characters (lexical); 8 Shorteners and misc URL counts (lexical)"
+C1;2;frag_len, has_frag;has_frag;2 Path, query, fragment (ANTLR grammar)
+C3;2;host_ipv4, host_n_scripts;host_n_scripts;"1 Scheme and host (ANTLR grammar); 10 Obfuscation (research papers)"
+C2;2;host_digit_in_word, host_leet;host_digit_in_word;"10 Obfuscation (research papers); 9 Readability (from the other repo; English dictionary)"
+C7;2;n_dash_url, ratio_hyphen_url;ratio_hyphen_url;"10 Obfuscation (research papers); 3 Text values (grammar pieces + regex)"
+C8;2;n_dots_host, sc_other_host;n_dots_host;"3 Text values (grammar pieces + regex); 5 Special characters (lexical)"
+C9;2;host_platform, sfx_platform_bare;sfx_platform_bare;1 Scheme and host (ANTLR grammar)
+C10;2;reg_digits, sld_leet;reg_digits;"1 Scheme and host (ANTLR grammar); 9 Readability (from the other repo; English dictionary)"
+C11;2;sw_kit_path, sw_kit_url;sw_kit_path;6 Suspicious words (lexical)
+C12;2;longest_digit_run, url_digit_rate;longest_digit_run;3 Text values (grammar pieces + regex)
