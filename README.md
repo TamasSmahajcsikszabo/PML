@@ -1,4 +1,4 @@
-# <b>P</b><i>hishing</i> <b>ML</b>
+# <b>P</b><small><i>hishing</i></small> <b>ML</b>
 
 *URL-only phishing classifier*
 
