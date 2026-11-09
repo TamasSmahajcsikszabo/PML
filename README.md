@@ -1,4 +1,6 @@
-# URL-only phishing classifier
+# **P**hishing **ML**
+
+*URL-only phishing classifier*
 
 Classifies a single URL string as `phishing` or `clean`, using only the URL text (no page content, no network lookups).
 Every URL is parsed by an ANTLR grammar; one visit of the parse tree yields 141 features, which feed an ensemble of
