@@ -1,12 +1,5 @@
-```
- ____         __  __   _
-|  _ \       |  \/  | | |
-| |_) |      | |\/| | | |
-|  __/       | |  | | | |___
-|_| hishing  |_|  |_| |_____|
-```
-
-*URL-only phishing classifier*
+# PML
+## Phishing Machine Learning 
 
 Classifies a single URL string as `phishing` or `clean`, using only the URL text (no page content, no network lookups).
 Every URL is parsed by an ANTLR grammar; one visit of the parse tree yields 141 features, which feed an ensemble of
