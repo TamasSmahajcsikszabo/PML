@@ -27,7 +27,7 @@ rebuild with `PYTHONPATH=src .venv/bin/python src/tools/build_unseen_pool.py phi
 Each `--test` run draws `-n` URLs (default 50) at random: ceil(5% of n) phishing (3 for 50) and the rest neutral; `--seed` makes it repeatable.
 
 Caveats: the URLs have **no scheme**; they are parsed and measured exactly as written (the grammar accepts URLs without a scheme; nothing is prefixed or normalised). "good" means Common-Crawl-like ordinary pages, and 50 URLs are too few to estimate rates. On the whole 5,000-URL pool at the deployed threshold: AUC 0.942, recall 0.71, false-positive rate 4.7%, precision 0.79 (at the pool's 20% phishing share).
-The false-positive rate is much higher than the ~1% seen on `test.csv`: another sign that the model's scores shift with the data source (REPORT.md).
+The false-positive rate is much higher than the ~1% seen on `test.csv`: another sign that the model's scores shift with the data source (Report.md).
 
 ## `results/`
 Every `--test` run writes `results/test_<timestamp>_n<N>_seed<S>.csv` (`url,truth,prediction,probability,correct`) and a `.json` with the counts, the seed, the threshold and the model run used.

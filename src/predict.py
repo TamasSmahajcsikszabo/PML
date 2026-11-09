@@ -2,7 +2,7 @@
 
 Returns {"label": "phishing" | "clean", "probability": float in [0, 1]}.
 Invalid input (not a str, empty / whitespace only, longer than 8192 characters, or nothing the grammar can read) never raises: it returns
-{"label": "clean", "probability": 0.0} -- "no evidence", not a verdict. See REPORT.md."""
+{"label": "clean", "probability": 0.0} -- "no evidence", not a verdict. See Report.md."""
 import functools
 import json
 import math
@@ -24,6 +24,8 @@ def _load():
     cfg = json.loads((d / "config.json").read_text())
     S = pd.read_csv(d / "metrics_summary.csv").set_index("model")
     model = joblib.load(d / "model.joblib")
+    import urlfeat
+    urlfeat.set_normalised(cfg.get("normalised", False))  # score URLs in the view the run was trained on
     from urlfeat.fingerprint import fingerprint
     if cfg.get("fingerprint") and cfg["fingerprint"] != fingerprint():
         warnings.warn(f"run {d.name}: the feature code, grammar or word lists changed since this model was fitted; retrain it (models.run)")
@@ -51,7 +53,7 @@ def _score(url):
         probs = {m: float(est.predict_proba(Z)[0, 1]) for m, est in model["members"].items()}
         raw = float(np.mean(list(probs.values())))
         if "parts" in model:
-            from urlfeat import parts as parts_features
+            import urlfeat as parts_features
             H, P = parts_features.tables([url])
             probs["parts"] = float(model["parts"].predict_proba(H, P)[0])
             raw = float(np.mean([probs["xgboost"], raw, probs["parts"]]))

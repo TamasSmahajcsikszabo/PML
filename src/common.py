@@ -52,6 +52,37 @@ def run_dir(run_id=None):
     return RESULTS / (run_id or (RESULTS / "LATEST").read_text().strip())
 
 
+def load_train_plus_extra(ratio=2.0, seed=SEED):
+    """train.csv exactly as supplied + ratio x its size of extra public URLs from data/additional/corpus.csv (its public sources only, not its cleaned copy of train.csv),
+    half phishing and half legitimate, sampled with a fixed seed. Extra rows that repeat a train.csv URL under the task's normalisation are dropped first; the corpus builder already
+    removed everything in test.csv / external_test.csv / the --test pool, and that is asserted again here."""
+    tr = load("train").assign(source="task_train")
+    c = load_corpus()
+    c = c[c.source != "task_train"]
+    c = c[~c.url.map(norm_key).isin(set(tr.url.map(norm_key)))]
+    held_out = set(pd.concat([load("test").url, load("external_test").url]).map(norm_key))
+    assert not c.url.map(norm_key).isin(held_out).any(), "extra data overlaps an evaluation file"
+    per_class = int(round(ratio * len(tr))) // 2
+    extra = pd.concat([c[c.label == lab].sample(per_class, random_state=seed) for lab in (0, 1)])
+    return pd.concat([tr, extra[["url", "label", "source"]]]).reset_index(drop=True)
+
+
+def training_data(run_id=None):
+    """The rows a run was trained on (url, label, source), rebuilt from its config: train.csv as supplied, or train.csv + extra public URLs (same seed, same ratio)."""
+    import json
+    d = run_dir(run_id)
+    cfg = json.loads((d / "config.json").read_text())
+    if cfg.get("parent"):  # a parts run: its parent holds the training data
+        cfg = json.loads((run_dir(cfg["parent"]) / "config.json").read_text())
+    data = cfg.get("data", "train")
+    if data == "train":
+        return load("train").assign(source="task_train")
+    if data == "train+extra":
+        rows = cfg["corpus"]["rows"]
+        return load_train_plus_extra((rows - len(load("train"))) / len(load("train")))
+    return load_corpus()
+
+
 def load_corpus():
     """Training corpus built by tools/build_corpus.py: url, label, source (train.csv + public collections, evaluation sets excluded)."""
     return pd.read_csv(ADDITIONAL / "corpus.csv")

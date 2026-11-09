@@ -26,7 +26,8 @@ from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import accuracy_score, average_precision_score, brier_score_loss, f1_score, log_loss, precision_score, recall_score, roc_auc_score, roc_curve
 from sklearn.model_selection import ParameterSampler, StratifiedGroupKFold
 
-from common import RESULTS, SEED, clean_train, host_group, load, load_corpus
+import urlfeat
+from common import RESULTS, SEED, clean_train, host_group, load, load_corpus, load_train_plus_extra
 from models.model import ZOO, inputs
 from urlfeat.fingerprint import fingerprint
 
@@ -91,19 +92,24 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--name", default="nine-models")
     ap.add_argument("--version", default="v1", help="version label, prefixed to the run id (v1 = all features)")
-    ap.add_argument("--data", choices=["corpus", "train"], default="corpus", help="training data: data/additional/corpus.csv or the task train.csv only, untouched")
+    ap.add_argument("--normalised", action="store_true", help="features of the task's normalised view of every URL (lower-case, no scheme, no leading www., no trailing slash)")
+    ap.add_argument("--extra-ratio", type=float, default=2.0, help="with --data train+extra: extra URLs as a multiple of the size of train.csv")
+    ap.add_argument("--data", choices=["corpus", "train", "train+extra"], default="corpus", help="training data: data/additional/corpus.csv or the task train.csv only, untouched")
     ap.add_argument("--select-from", default=None, metavar="RUN_ID", help="feature selection: keep the top --keep share of every feature group, ranked by the importance measured in this run")
     ap.add_argument("--keep", type=float, default=0.5)
     ap.add_argument("--max-corr", type=float, default=0.9, help="correlation filter: keep one feature of every group with |Spearman r| >= this (0 = off)")
     ap.add_argument("--set-latest", action="store_true", help="make this run the one predict.py uses (default: leave LATEST alone)")
     ap.add_argument("--smoke", action="store_true", help="tiny end-to-end check (4,000 URLs, one search candidate per model)")
     args = ap.parse_args()
+    urlfeat.set_normalised(args.normalised)
     run_id = f"{args.version}_{datetime.datetime.now():%Y%m%dT%H%M}_{'smoke' if args.smoke else args.name}"
     out = RESULTS / run_id
     out.mkdir(parents=True)
 
     if args.data == "train":
         corpus = load("train").assign(source="task_train")  # train.csv exactly as supplied: duplicates and conflicting labels are intentional and kept
+    elif args.data == "train+extra":
+        corpus = load_train_plus_extra(args.extra_ratio)  # train.csv as supplied + extra public URLs (evaluation files excluded)
     else:
         corpus = load_corpus()
     if args.smoke:
@@ -222,7 +228,7 @@ def main():
     summary.to_csv(out / "metrics_summary.csv", index=False, float_format="%.6g")
 
     joblib.dump({"members": {m: final[m] for m in members}, "calibrator": iso, "columns": list(Z.columns)}, out / "model.joblib", compress=3)
-    json.dump({"run_id": run_id, "seed": SEED, "n_folds": N_FOLDS, "corpus": report, "tuned_params": best, "blend_members": members,
+    json.dump({"run_id": run_id, "normalised": bool(args.normalised), "seed": SEED, "n_folds": N_FOLDS, "corpus": report, "tuned_params": best, "blend_members": members,
                "threshold": thr["blend_top3_calibrated"], "threshold_rule": "calibrated blend score at the 99th percentile of out-of-fold legitimate URLs (validation FPR 1%)",
                "n_features": Z.shape[1], "version": args.version, "data": args.data, "parent_run_for_feature_selection": args.select_from,
                "fingerprint": fingerprint(), "feature_selection": f"top {args.keep:.0%} of every feature group by mean permutation importance of the parent run (features_kept.csv)" if args.select_from else "none (all features)",

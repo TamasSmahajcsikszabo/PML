@@ -1,7 +1,7 @@
 // URL parser: structure only. Generate the lexer first (tokenVocab).
 //   url -> [scheme://] authority [path] [query] [fragmentPart]     (the scheme is one SCHEME_PREFIX token; URLs may have none)
 // Components worth extracting: scheme, userinfo, host (ipv4 | domain: subdomain* registrable publicSuffix), port,
-// (publicSuffix is a PLATFORM token for hosting platforms: registrable is then the tenant, e.g. evil.workers.dev),
+// (hosting platforms such as workers.dev are not tokens: the visitor finds them in src/lists/platforms.txt on the parsed labels, the tenant is then the registrable, e.g. evil.workers.dev),
 // path segments (+ fileExt), query pairs (key/value), fragmentPart.
 parser grammar UrlParser;
 options { tokenVocab = UrlLexer; }
@@ -14,21 +14,19 @@ authority : (userinfo AT)? host (COLON port?)? ;
 userinfo  : (authTok | AT)* ;
 port      : DIGITS ;
 
-// Alternatives are tried in order on ambiguity: ipv4, recognised-suffix domain, bare platform, then anything else.
-host      : ipv4 | domain | platformHost | otherHost ;
+// Alternatives are tried in order on ambiguity: ipv4, recognised-suffix domain, then anything else.
+host      : ipv4 | domain | otherHost ;
 ipv4      : DIGITS DOT DIGITS DOT DIGITS DOT DIGITS ;     // octet range is a text-value check for later
 
 // Non-greedy loop = fewest subdomains = longest public suffix (com.et beats et), as in the PSL.
 domain    : (subdomain DOT)*? registrable DOT publicSuffix DOT? ;
 subdomain   : hostLabel ;
 registrable : hostLabel ;
-publicSuffix : PLATFORM | SLD DOT tld | tld ;               // workers.dev (tenant = registrable) | co.uk | com
+publicSuffix : SLD DOT tld | tld ;                         // co.uk | com
 tld       : TLD | SLD ;
-platformHost : PLATFORM DOT? ;                            // the platform itself, no tenant (cloudflare-ipfs.com, s3.us-east-2.amazonaws.com)
-
 otherHost : hostLabel (DOT hostLabel)* DOT? ;             // localhost, unknown TLD, ...
 hostLabel : labelTok+ ;                                   // >1 token only around %xx / stray chars
-labelTok  : SCHEME_PREFIX | LABEL | DIGITS | WWW | PUNYCODE | TLD | SLD | PLATFORM | PCT | AUTH_OTHER ;
+labelTok  : SCHEME_PREFIX | LABEL | DIGITS | WWW | PUNYCODE | TLD | SLD | PCT | AUTH_OTHER ;
 authTok   : labelTok | DOT | COLON ;
 
 // ---- path --------------------------------------------------------------------

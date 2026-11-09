@@ -19,9 +19,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, roc_curve
 from sklearn.model_selection import StratifiedGroupKFold
 
-from common import ADDITIONAL, RESULTS, SEED, host_group, load, load_corpus, run_dir
+from common import ADDITIONAL, RESULTS, SEED, host_group, load, load_corpus, load_train_plus_extra, run_dir
 from models.parts_model import PartsModel, permutation_importance, subset
-from urlfeat import parts as P_
+import urlfeat as P_
 from urlfeat.fingerprint import fingerprint
 
 warnings.filterwarnings("ignore")
@@ -38,11 +38,12 @@ def shape(urls):
     return np.where([bool(re.fullmatch(r"(?:[a-z][a-z0-9+.-]*://)?[^/?#]*/?", u, re.I)) for u in urls], "path-less", "with path/query")
 
 
-def tables(name, urls):
-    cache = ADDITIONAL / f"parts_{name}_{fingerprint()[:12]}.pkl"
+def tables(name, urls, host_labels=False):
+    cache = ADDITIONAL / f"parts_{name}{'_hl' if host_labels else ''}{'_norm' if P_.get_visitor().normalised else ''}_{fingerprint()[:12]}.pkl"
     if cache.exists():
         return joblib.load(cache)
-    out = P_.tables(urls)
+    out = P_.tables(urls, host_labels)
+    cache.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(out, cache)
     return out
 
@@ -56,17 +57,21 @@ def metrics(y, p, thr):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data", choices=["train", "corpus"], default="train", help="training data: train.csv as supplied, or the 66k corpus (data/additional/corpus.csv)")
+    ap.add_argument("--data", choices=["train", "corpus", "train+extra"], default="train", help="training data: train.csv as supplied, or the 66k corpus (data/additional/corpus.csv)")
+    ap.add_argument("--extra-ratio", type=float, default=2.0)
     ap.add_argument("--parent", default="v2_20261104T1749_corr-filter-0.75", help="run whose out-of-fold scores and fitted members are combined (same data!)")
     ap.add_argument("--set-latest", action="store_true", help="make this run the one predict.py uses")
     ap.add_argument("--name", default="parts")
     ap.add_argument("--version", default="v3")
     ap.add_argument("--max-corr", type=float, default=0.75)
+    ap.add_argument("--hlabel", action="store_true", help="host component with mean / max / min of the part features of the host labels (experiment: no gain on train.csv)")
     a = ap.parse_args()
     out = RESULTS / f"{a.version}_{datetime.datetime.now():%Y%m%dT%H%M}_{a.name}"
     out.mkdir(parents=True)
-    D = {"train": load("train") if a.data == "train" else load_corpus(), "test": load("test"), "external_test": load("external_test")}
-    T = {n: tables(n if n != "train" else a.data, d.url.tolist()) for n, d in D.items()}
+    norm = bool(json.loads((run_dir(a.parent) / "config.json").read_text()).get("normalised", False))  # the parts model uses the same view of the URL as its parent run
+    P_.set_normalised(norm)
+    D = {"train": load("train") if a.data == "train" else load_train_plus_extra(a.extra_ratio) if a.data == "train+extra" else load_corpus(), "test": load("test"), "external_test": load("external_test")}
+    T = {n: tables(n if n != "train" else (a.data if a.data != "train+extra" else f"train+extra{a.extra_ratio:g}"), d.url.tolist(), a.hlabel) for n, d in D.items()}
     y, urls = D["train"].label.values, D["train"].url.values
     groups = np.array([host_group(u) for u in urls])
     folds = [(a_, b_) for a_, b_ in StratifiedGroupKFold(5, shuffle=True, random_state=SEED).split(np.arange(len(y)), y, groups)]  # same folds as models.run
@@ -75,11 +80,11 @@ def main():
     H, P = T["train"]
     oof_parts, imp = np.zeros(len(y)), []
     for k, (tr, va) in enumerate(folds):
-        m = PartsModel(a.max_corr).fit(H.iloc[tr].reset_index(drop=True), subset(P, tr), y[tr], groups[tr])
+        m = PartsModel(a.max_corr, use_hlabel=a.hlabel).fit(H.iloc[tr].reset_index(drop=True), subset(P, tr), y[tr], groups[tr])
         oof_parts[va] = m.predict_proba(H.iloc[va].reset_index(drop=True), subset(P, va))
         print(f"fold {k}: parts AUC {roc_auc_score(y[va], oof_parts[va]):.4f}", flush=True)
         imp.append(permutation_importance(m, H.iloc[va].reset_index(drop=True), subset(P, va), y[va]).assign(fold=k))
-    final = PartsModel(a.max_corr).fit(H, P, y, groups)
+    final = PartsModel(a.max_corr, use_hlabel=a.hlabel).fit(H, P, y, groups)
     print("combiner weights:", {k: round(v, 3) for k, v in final.combiner_weights.items()}, flush=True)
 
     # 2. parent run: out-of-fold scores and test / external scores of its members
@@ -171,7 +176,7 @@ def main():
                     src_rows.append({"candidate": nm, "source": sname, "n": int(mk.sum()), "auc": roc_auc_score(y[mk], oo[nm].values[mk]), "recall": float((oo[nm].values[mk & (y == 1)] >= thr).mean()),
                                      "fpr": float((oo[nm].values[mk & (y == 0)] >= thr).mean())})
         pd.DataFrame(src_rows).to_csv(out / "metrics_by_source.csv", index=False, float_format="%.5g")
-    cfg = {"run_id": out.name, "parent": a.parent, "max_corr": a.max_corr, "fingerprint": fingerprint(), "data": a.data, "rows": len(y), "combiner_weights": final.combiner_weights,
+    cfg = {"run_id": out.name, "normalised": norm, "parent": a.parent, "max_corr": a.max_corr, "fingerprint": fingerprint(), "data": a.data, "rows": len(y), "combiner_weights": final.combiner_weights,
            "component_columns": final.columns, "deployed_candidate": DEPLOY, "blend_members": list(pm["members"]), "threshold_raw": thr_raw, "threshold": float(iso.predict([thr_raw])[0]),
            "threshold_rule": "1% FPR of the out-of-fold legitimate scores of the raw mean [xgboost, blend, parts]; probability = isotonic calibration of that mean",
            "per_model_thresholds": per_model, "folds": "StratifiedGroupKFold(5, shuffle, seed 0) on host groups, as models.run"}
@@ -185,7 +190,7 @@ def main():
           fence(M[["candidate", "set", "recall", "fpr", "precision", "accuracy"]].round(3).to_string(index=False)), "", "## By URL shape", "", fence(SH.round(3).to_string(index=False)), "",
           "## Predictor importance of the parts model (AUC drop when shuffled, mean over folds; top 20)", "", fence(imp.head(20).round(4).to_string(index=False)), "",
           "## Combiner weights (log-odds)", "", "\n".join(f"* {k}: {v:+.3f}" for k, v in final.combiner_weights.items()), "",
-          "Files: metrics.csv, metrics_by_shape.csv, bootstrap_delta.csv (tools.bootstrap_delta), parts_importance.csv, errors_*.csv (misclassified URLs with all candidate scores), error_analysis.md, scores_*.csv, "
+          "Files: metrics.csv, metrics_by_shape.csv, parts_importance.csv, errors_*.csv (misclassified URLs with all candidate scores), error_analysis.md, scores_*.csv, "
           "metrics_by_source.csv (corpus), metrics_summary.csv, model.joblib, config.json, pipeline_logs/."]
     (out / "README.md").write_text("\n".join(md) + "\n")
     if a.set_latest:

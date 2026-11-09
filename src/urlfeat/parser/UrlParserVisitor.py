@@ -64,11 +64,6 @@ class UrlParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by UrlParser#platformHost.
-    def visitPlatformHost(self, ctx:UrlParser.PlatformHostContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by UrlParser#otherHost.
     def visitOtherHost(self, ctx:UrlParser.OtherHostContext):
         return self.visitChildren(ctx)

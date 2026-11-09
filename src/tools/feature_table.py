@@ -3,6 +3,7 @@
 Importance = permutation importance (drop in validation ROC AUC when the feature is shuffled, mean of 5 folds) of every one of the nine models in the run;
 the table gives its mean and standard deviation ACROSS the nine models, and the mean rank (1 = most important of 141). L = value is log1p-transformed."""
 import argparse
+import json
 
 import pandas as pd
 
@@ -28,7 +29,7 @@ grp("2 Path, query, fragment (ANTLR grammar)", url_len="URL length in characters
     n_pairs="number of query key/value pairs (L)", n_empty_val="query pairs with an empty value (L)", query_len="query length (L)", n_nested="count of URLs embedded in the query",
     n_email="count of e-mail addresses in path/query/fragment", has_frag="1 if there is a #fragment", frag_len="fragment length (L)", pct_total="count of %XX escapes",
     stray_pct="count of invalid % signs")
-grp("3 Text values (grammar pieces + regex)", max_label_len="longest host label (L)", mean_seg_len="mean path-segment length", max_qkey_len="longest query key (L)",
+grp("3 Text values (grammar pieces + scanners in text.py)", max_label_len="longest host label (L)", mean_seg_len="mean path-segment length", max_qkey_len="longest query key (L)",
     max_qval_len="longest query value (L)", mean_qval_len="mean query-value length", host_digit_rate="share of digits in the host", path_digit_rate="share of digits in the path",
     query_digit_rate="share of digits in the query", url_digit_rate="share of digits in the URL", longest_digit_run="longest run of consecutive digits (L)",
     rep_char_host="1 if a character repeats 3+ times in a host label (www ignored)", rep_char_path="1 if a character repeats 3+ times in a path segment",
@@ -83,37 +84,46 @@ def main():
     ap.add_argument("--out", default=str(ROOT / "docs" / "features.md"))
     ap.add_argument("--csv", default=str(ROOT / "docs" / "features.csv"))
     ap.add_argument("--sep", default=";", help="field separator of the csv (default: semicolon; fields that contain it are quoted)")
-    ap.add_argument("--report", action="store_true", help="also put the table into REPORT.md")
+    ap.add_argument("--report", action="store_true", help="also put a compact table into Report.md as an appendix (off: the report has no appendix)")
     a = ap.parse_args()
     d = run_dir(a.run)
-    fi = pd.read_csv(d / "feature_importance.csv")
+    src = d if (d / "feature_importance.csv").exists() else run_dir(json.loads((d / "config.json").read_text())["parent"])  # a parts run keeps the importances in its parent run
+    fi = pd.read_csv(src / "feature_importance.csv")
     st = fi.groupby("feature").agg(mean=("permutation_auc_drop", "mean"), std=("permutation_auc_drop", "std"), rank=("rank", "mean"))
     defs = {n: (g, t) for g, m in G.items() for n, t in m.items()}
-    missing, extra = set(st.index) - set(defs), set(defs) - set(st.index)
-    assert not missing and not extra, (missing, extra)
+    missing = set(st.index) - set(defs)
+    assert not missing, missing  # every feature of the run needs a definition (features dropped by the correlation filter are simply not listed)
     rows = [{"group": defs[n][0], "name": n, "definition": defs[n][1], "log1p": any(t in defs[n][1] for t in ("(L)", "; L)")), "importance_mean": st.loc[n, "mean"], "importance_std": st.loc[n, "std"],
              "mean_rank": st.loc[n, "rank"]} for n in st.index]
     pd.DataFrame(rows).sort_values(["group", "importance_mean"], ascending=[True, False]).to_csv(a.csv, index=False, sep=a.sep, float_format="%.6g")
-    lines = [f"# Predictors ({len(st)}), run {d.name}", "",
+    lines = [f"# Predictors ({len(st)}), run {src.name}", "",
              "Importance = drop in validation ROC AUC when the feature is shuffled (permutation importance, mean of 5 folds), taken for each of the nine models; **mean ± std across the nine models**, "
              "and the mean rank among all features (1 = most important). L = log1p-transformed. All features are computed from the URL exactly as given.", ""]
     for g, m in G.items():
+        m = {n: v for n, v in m.items() if n in st.index}
+        if not m:
+            continue
         lines += [f"## {g}", "", "| name | definition | importance (mean ± std) | mean rank |", "|---|---|---|---|"]
         for n in sorted(m, key=lambda n: -st.loc[n, "mean"]):
             lines.append(f"| `{n}` | {m[n]} | {st.loc[n, 'mean']:.4f} ± {st.loc[n, 'std']:.4f} | {st.loc[n, 'rank']:.0f} |")
         lines.append("")
     import pathlib
     pathlib.Path(a.out).write_text("\n".join(lines) + "\n")
-    if a.report:  # (re)place the table in REPORT.md between markers; first time: before the "Threshold and deployment" section
-        body = "\n".join(l.replace("## ", "### ", 1) if l.startswith("## ") else l for l in lines[2:])
-        block = f"<!-- predictors:start -->\n## Predictors ({len(st)}) and their importance\n\n" + body + "\n<!-- predictors:end -->\n"
-        rp = ROOT / "REPORT.md"
+    if a.report:  # (re)place the table between markers in Report.md; first time: appended as the Appendix
+        import re
+        cells = []
+        for g, m in G.items():
+            m = sorted((n for n in m if n in st.index), key=lambda n: -st.loc[n, "mean"])
+            if m:
+                cells.append(f"| {re.sub(r' [(].*$', '', re.sub(r'^[0-9]+ ', '', g))} | " + ", ".join(f"`{n}` {st.loc[n, 'mean']:.3f}" for n in m) + " |")
+        block = (f"<!-- predictors:start -->\n## Appendix: predictors\n\nThe {len(st)} predictors kept by the correlation filter, by group, with their permutation importance (drop in validation AUC when shuffled, mean over the nine models); "
+                 "definitions in `docs/features.md`.\n\n| group | predictors (importance) |\n|---|---|\n" + "\n".join(cells) + "\n<!-- predictors:end -->\n")
+        rp = ROOT / "Report.md"
         txt = rp.read_text()
         if "<!-- predictors:start -->" in txt:
             txt = txt[:txt.index("<!-- predictors:start -->")] + block + txt[txt.index("<!-- predictors:end -->") + len("<!-- predictors:end -->\n"):]
         else:
-            k = txt.index("## Threshold and deployment")
-            txt = txt[:k] + block + "\n" + txt[k:]
+            txt = txt.rstrip("\n") + "\n\n" + block
         rp.write_text(txt)
     print("\n".join(lines))
 

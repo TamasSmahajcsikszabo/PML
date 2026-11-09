@@ -1,0 +1,41 @@
+candidate,set,shape,n,phishing,auc,recall,fpr
+parts,train_oof,path-less,8928,4478,0.90688,0.31934,0.0094382
+parts,train_oof,with path/query,34327,17154,0.97648,0.68066,0.01019
+parts,test,path-less,844,273,0.90595,0.27473,0.0017513
+parts,test,with path/query,2014,1156,0.98299,0.6808,0.0034965
+parts,external_test,path-less,2447,1018,0.99092,0.26424,0
+xgboost,train_oof,path-less,8928,4478,0.95852,0.63801,0.016404
+xgboost,train_oof,with path/query,34327,17154,0.98474,0.76309,0.0083853
+xgboost,test,path-less,844,273,0.95341,0.52015,0.012259
+xgboost,test,with path/query,2014,1156,0.98772,0.75087,0.009324
+xgboost,external_test,path-less,2447,1018,0.95485,0.42043,0.0020994
+blend,train_oof,path-less,8928,4478,0.95939,0.65386,0.018427
+blend,train_oof,with path/query,34327,17154,0.98596,0.7628,0.0078612
+blend,test,path-less,844,273,0.95257,0.63736,0.015762
+blend,test,with path/query,2014,1156,0.98801,0.75,0.0058275
+blend,external_test,path-less,2447,1018,0.97125,0.45383,0.0013996
+xgboost+parts_mean,train_oof,path-less,8928,4478,0.94677,0.44395,0.017528
+xgboost+parts_mean,train_oof,with path/query,34327,17154,0.98485,0.74502,0.0080941
+xgboost+parts_mean,test,path-less,844,273,0.9449,0.40293,0.0070053
+xgboost+parts_mean,test,with path/query,2014,1156,0.98799,0.73616,0.0058275
+xgboost+parts_mean,external_test,path-less,2447,1018,0.98511,0.37819,0.00069979
+blend+parts_mean,train_oof,path-less,8928,4478,0.94749,0.48102,0.017753
+blend+parts_mean,train_oof,with path/query,34327,17154,0.98534,0.75772,0.0080359
+blend+parts_mean,test,path-less,844,273,0.94383,0.49451,0.0070053
+blend+parts_mean,test,with path/query,2014,1156,0.98825,0.73789,0.0034965
+blend+parts_mean,external_test,path-less,2447,1018,0.98861,0.40275,0.00069979
+xgboost+blend+parts_mean,train_oof,path-less,8928,4478,0.95316,0.52836,0.017978
+xgboost+blend+parts_mean,train_oof,with path/query,34327,17154,0.98614,0.7625,0.0079776
+xgboost+blend+parts_mean,test,path-less,844,273,0.95021,0.50916,0.0070053
+xgboost+blend+parts_mean,test,with path/query,2014,1156,0.98858,0.74654,0.004662
+xgboost+blend+parts_mean,external_test,path-less,2447,1018,0.98294,0.42534,0.00069979
+xgboost+parts_stack,train_oof,path-less,8928,4478,0.95643,0.60585,0.018202
+xgboost+parts_stack,train_oof,with path/query,34327,17154,0.98565,0.76443,0.0079194
+xgboost+parts_stack,test,path-less,844,273,0.95199,0.49451,0.0070053
+xgboost+parts_stack,test,with path/query,2014,1156,0.98849,0.7526,0.006993
+xgboost+parts_stack,external_test,path-less,2447,1018,0.97233,0.41257,0.0020994
+blend+parts_stack,train_oof,path-less,8928,4478,0.95749,0.62148,0.018427
+blend+parts_stack,train_oof,with path/query,34327,17154,0.98649,0.76723,0.0078612
+blend+parts_stack,test,path-less,844,273,0.95232,0.62271,0.014011
+blend+parts_stack,test,with path/query,2014,1156,0.98862,0.75346,0.0058275
+blend+parts_stack,external_test,path-less,2447,1018,0.97816,0.43124,0.0013996

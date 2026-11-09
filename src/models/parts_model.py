@@ -40,9 +40,22 @@ def _agg(rows, logits, n):
     return out
 
 
+def host_matrix(H, P, use_hlabel=True):
+    """host frame, one row per URL. With use_hlabel it keeps the `hlabel_{col}_{stat}` columns the visitor built (mean / max / min of the part features of the host's labels; NaN where a host
+    has none: IPv4, bare platform), otherwise it drops them. The frame must come from `urlfeat.tables(..., host_labels=True)` to have them."""
+    H = H.reset_index(drop=True)
+    if use_hlabel:
+        assert any(c.startswith("hlabel_") for c in H.columns), "use_hlabel needs a host frame built with host_labels=True"
+        return H
+    return H[[c for c in H.columns if not c.startswith("hlabel_")]]
+
+
 class PartsModel:
-    def __init__(self, max_corr=0.75, n_inner=5):
-        self.max_corr, self.n_inner = max_corr, n_inner
+    def __init__(self, max_corr=0.75, n_inner=5, use_hlabel=False):
+        self.max_corr, self.n_inner, self.use_hlabel = max_corr, n_inner, use_hlabel
+
+    def _host(self, H, P):
+        return host_matrix(H, P, getattr(self, "use_hlabel", False))
 
     def _fit_components(self, H, P, y):
         from models.run import correlation_filter
@@ -70,18 +83,19 @@ class PartsModel:
 
     def fit(self, H, P, y, groups):
         y, n = np.asarray(y), len(H)
+        HM = self._host(H, P)
         L = np.zeros((n, 7))
         for a, b in StratifiedGroupKFold(self.n_inner, shuffle=True, random_state=SEED).split(np.zeros(n), y, groups):
-            comps = self._fit_components(H.iloc[a].reset_index(drop=True), subset(P, a), y[a])
-            L[b] = self._levels(comps, H.iloc[b].reset_index(drop=True), subset(P, b))
+            comps = self._fit_components(HM.iloc[a].reset_index(drop=True), subset(P, a), y[a])
+            L[b] = self._levels(comps, HM.iloc[b].reset_index(drop=True), subset(P, b))
         self.comb = LogisticRegression(max_iter=1000).fit(L, y)
-        self.comps = self._fit_components(H.reset_index(drop=True), P, y)
+        self.comps = self._fit_components(HM, P, y)
         self.columns = {k: v[1] for k, v in self.comps.items()}
         self.combiner_weights = dict(zip(["host", "seg_mean", "seg_max", "seg_min", "qry_mean", "qry_max", "qry_min", "intercept"], [*self.comb.coef_[0], self.comb.intercept_[0]]))
         return self
 
     def levels(self, H, P):
-        return self._levels(self.comps, H.reset_index(drop=True), P)
+        return self._levels(self.comps, self._host(H, P), P)
 
     def predict_proba(self, H, P):
         return self.comb.predict_proba(self.levels(H, P))[:, 1]
@@ -91,12 +105,12 @@ def permutation_importance(model, H, P, y, n_repeats=3, seed=SEED):
     """Drop in URL-level AUC of the whole parts model when one input column of one component is shuffled (rows of H, or part rows of the segment / query frame).
     Returns a frame (component, feature, auc_drop, sd); a negative drop is noise."""
     from sklearn.metrics import roc_auc_score
-    rng, H = np.random.default_rng(seed), H.reset_index(drop=True)
+    rng, Hm = np.random.default_rng(seed), model._host(H, P)
     base_levels = model.levels(H, P)
     base = roc_auc_score(y, model.comb.predict_proba(base_levels)[:, 1])
-    n, rows = len(H), []
+    n, rows = len(Hm), []
     blocks = {"host": slice(0, 1), "seg": slice(1, 4), "qry": slice(4, 7)}
-    Hf = H.fillna(0)
+    Hf = Hm.fillna(0)
     for comp, (m, cols) in model.comps.items():
         if comp == "host":
             for c in cols:

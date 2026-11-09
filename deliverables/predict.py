@@ -9,7 +9,7 @@
     python predict.py --best URL                   # only the best deployed model (highest cross-validated AUC): its raw probability and label
     python predict.py --test [-n N] [--seed S]     # random sample of N unseen URLs (default 50; 5% phishing, rest neutral); prints the results and saves them to results/
 
-`label` is "phishing" or "clean" (threshold fixed on training data, see ../REPORT.md); `probability` is the calibrated model score in [0, 1].
+`label` is "phishing" or "clean" (threshold fixed on training data, see ../Report.md); `probability` is the calibrated model score in [0, 1].
 Invalid input (not a string, empty, unparsable) returns {"label": "clean", "probability": 0.0}.
 Model, features, grammar and word lists come from ../src/ (latest run in ../src/models/results/); nothing is trained or downloaded."""
 import argparse

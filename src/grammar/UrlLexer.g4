@@ -13,7 +13,6 @@ SCHEME_PREFIX : [a-z] [a-z0-9+.\-]* '://' ;
 
 SLD        : SLD_NAMES;                  // com co ac gov ... (also valid as a TLD; see parser `tld`)
 TLD        : TLD_NAMES;                  // must precede PUNYCODE: IANA has xn-- TLDs
-PLATFORM   : PLATFORM_NAMES;             // multi-label (workers.dev); longest match beats LABEL. Mid-host use is still parseable (labelTok)
 WWW        : 'www';
 PUNYCODE   : 'xn--' [a-z0-9\-]+;
 DIGITS     : [0-9]+;

@@ -1,0 +1,12 @@
+{
+  "seed": 1,
+  "n": 10,
+  "phishing": 1,
+  "TP": 0,
+  "FP": 1,
+  "FN": 1,
+  "TN": 8,
+  "threshold": 0.9354838709677419,
+  "mode": "blend",
+  "run": "v3_20261109T0956_visitor-platform"
+}

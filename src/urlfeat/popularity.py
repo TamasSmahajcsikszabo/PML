@@ -15,8 +15,7 @@ def _ranks():
         return {d.strip(): i for i, d in enumerate(f, 1)}
 
 
-def popularity(s):
-    """s: structure() row."""
-    rs = f"{s['reg']}.{s['suffix']}" if s["reg"] and s["suffix"] else s["host"]
-    rank = _ranks().get(rs.lower())
-    return {"reg_log_rank": math.log10(rank) if rank else ABSENT}
+def log_rank(registrable_domain):
+    """log10 of the Tranco rank of `registrable.suffix` (6 when absent)"""
+    rank = _ranks().get(registrable_domain.lower())
+    return math.log10(rank) if rank else ABSENT

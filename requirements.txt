@@ -7,3 +7,4 @@ xgboost==3.4.1
 antlr4-python3-runtime==4.13.2
 pyspellchecker==0.9.1
 matplotlib==3.11.2
+pypdf==6.21.4
