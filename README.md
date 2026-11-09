@@ -190,6 +190,21 @@ flowchart LR
     U["URL string"] --> LEX["Lexer: tokens per mode<br/>authority, path, query, fragment"]
     LEX --> PAR["Parser: parse tree"]
     PAR --> VIS["URLVisitor.run"]
+    VIS --> M["8 visit stages: URL, authority/host, domain,<br/>path, query, fragment, terminals, cross-part rules<br/>(expand the details below)"]
+    M --> OUT["Result"]
+    OUT --> ROW["row: 141 columns"]
+    OUT --> HF["host frame: 52 columns"]
+    OUT --> PT["parts rows: segment, query key, query value"]
+```
+
+<details>
+<summary>Show the visit methods and the features each one builds</summary>
+
+```mermaid
+flowchart LR
+    U["URL string"] --> LEX["Lexer: tokens per mode<br/>authority, path, query, fragment"]
+    LEX --> PAR["Parser: parse tree"]
+    PAR --> VIS["URLVisitor.run"]
 
     VIS --> A["visitUrl<br/>scheme prefix, whole-URL entropy,<br/>ratios, special characters, URL spell check"]
     VIS --> B["visitAuthority, visitHost, visitIpv4<br/>host kind, userinfo, port, host length,<br/>dashes, dots, digit rate, scripts, homoglyphs"]
@@ -212,6 +227,8 @@ flowchart LR
     OUT --> HF["host frame: 52 columns"]
     OUT --> PT["parts rows: segment, query key, query value"]
 ```
+
+</details>
 
 ## Layout
 | path | what |
