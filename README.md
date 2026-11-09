@@ -1,4 +1,10 @@
-# <b>P</b><small><small><i>hishing</i></small></small> <b>ML</b>
+```
+ ____         __  __   _
+|  _ \       |  \/  | | |
+| |_) |      | |\/| | | |
+|  __/       | |  | | | |___
+|_| hishing  |_|  |_| |_____|
+```
 
 *URL-only phishing classifier*
 
