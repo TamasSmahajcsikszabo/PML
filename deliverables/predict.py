@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Phishing URL prediction (contract of docs/task.md) as a library and a command-line tool.
+"""Phishing URL prediction (the task's predict() contract) as a library and a command-line tool.
 
     from predict import predict                    # from the deliverables/ folder
     predict("https://www.PayPal-secure.login.tk/webscr?cmd=x")   # {"label": "phishing", "probability": 0.96}

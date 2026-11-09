@@ -1,75 +1,119 @@
 # URL-only phishing classifier
 
-Task: `docs/task.md`. Report: `Report.md`. Data (`train.csv`, `test.csv`, `external_test.csv`) is **not** in the repo; put it in `data/`.
+Classifies a single URL string as `phishing` or `clean`, using only the URL text (no page content, no network lookups).
+Every URL is parsed by an ANTLR grammar; one visit of the parse tree yields 141 features, which feed an ensemble of
+gradient-boosted trees, a multilayer perceptron, a random forest and a per-part model. Method and results: [`Report.md`](Report.md) ([PDF](Report.pdf)).
 
-## Project setup
-1. **Get the code and the data.** Clone the repository and copy the three supplied files into `data/` (they are not part of the repository):
-   ```bash
-   git clone <repository-url> phishing_ML && cd phishing_ML
-   mkdir -p data && cp /path/to/{train,test,external_test}.csv data/
-   ```
-2. **Create the Python environment** (Python 3.14 was used; any 3.11 or newer should work). All versions are pinned in `requirements.txt`:
-   ```bash
-   python -m venv .venv && .venv/bin/pip install -r requirements.txt     # or: uv venv && uv pip install -r requirements.txt
-   ```
-   No Java and no network access are needed; the spell checker ships its dictionary and the trained model is in `src/models/results/` (the run named in `src/models/results/LATEST`).
-3. **Optional, only to rebuild `Report.pdf`:** `pandoc` (3.6.4 used) and `xelatex` (TeX Live 2023 used).
-4. **Check that it works** (a few seconds; it loads the saved model and runs 33 unusual inputs through `predict`):
-   ```bash
-   PYTHONPATH=src .venv/bin/python src/tests/test_predict_contract.py     # expected: "33 inputs, 0 failures"
-   ```
-5. **Reproduce everything** (about 30 minutes on a CPU; retrains the models, rescores both evaluation files, writes `deliverables/predictions.csv`, `Report.md` and `Report.pdf`):
-   ```bash
-   PYTHONPATH=src .venv/bin/python src/pipeline.py
-   ```
+## Requirements
+* Python 3.11 or newer (developed on 3.14); dependencies are pinned in `requirements.txt`.
+* For prediction nothing else is needed: no Java, no network access. The trained model ships in `src/models/results/` (the run named in `src/models/results/LATEST`).
+* Optional: `pandoc` (3.6+) and `xelatex` (TeX Live 2023+) to rebuild `Report.pdf`; Java 11+ to regenerate the ANTLR parser after editing the grammar.
 
-Java is only needed to regenerate the ANTLR parser after editing the grammar (the ANTLR 4.13.2 jar is in `src/grammar/`):
-`cd src/grammar && java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 -visitor -no-listener -Xexact-output-dir -o ../urlfeat/parser UrlLexer.g4 UrlParser.g4` (the word-list lexers: `cd src/grammar && ../../.venv/bin/python gen_words.py`).
-
-## Using predict.py
-`predict(url)` takes any raw string and returns exactly two keys: `label` (`"phishing"` or `"clean"`) and `probability` (a number between 0 and 1). It loads the saved model on first use; nothing is trained or downloaded.
-
-**As a library** (the task's contract). All code lives in `src/`, so put it on the path:
+## Installation
 ```bash
-PYTHONPATH=src .venv/bin/python
+git clone git@github.com:TamasSmahajcsikszabo/PML.git phishing_ML
+cd phishing_ML
+python -m venv .venv
+source .venv/bin/activate             # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 ```
+
+The supplied data files are **not** part of the repository. They are needed only for training and evaluation, not for prediction:
+```bash
+mkdir -p data
+cp /path/to/train.csv /path/to/test.csv /path/to/external_test.csv data/
+```
+
+Check the installation (loads the saved model and runs 33 valid and invalid inputs through `predict`; a few seconds):
+```bash
+PYTHONPATH=src python src/tests/test_predict_contract.py     # expected: "33 inputs, 0 failures"
+```
+
+## Usage
+
+`predict(url)` takes any string and returns a dictionary with exactly two keys:
+
+| key | value |
+|---|---|
+| `label` | `"phishing"` or `"clean"` |
+| `probability` | calibrated phishing probability in [0, 1] |
+
+The model is loaded on first use; nothing is trained or downloaded. The entry point is `deliverables/predict.py`, which finds the code and the model by itself, so no path setup is needed.
+
+### Python
 ```python
+>>> import sys; sys.path.insert(0, "deliverables")      # or run Python from inside deliverables/
 >>> from predict import predict
->>> predict("https://www.wikipedia.org/")                                   # clearly legitimate
-{'label': 'clean', 'probability': 0.012004801920768308}
->>> predict("https://docs.python.org/3/library/json.html")                  # clearly legitimate
-{'label': 'clean', 'probability': 0.023952095808383235}
->>> predict("https://www.PayPal-secure.login.tk/webscr?cmd=x")              # clearly phishing (the task's example)
-{'label': 'phishing', 'probability': 0.9978070175438597}
->>> predict("http://paypal.com.account-verify.secure-login.xyz/webscr/update.php?cmd=_login")   # clearly phishing
-{'label': 'phishing', 'probability': 0.9978070175438597}
+>>> predict("https://www.wikipedia.org/")
+{'label': 'clean', 'probability': 0.00391304347826087}
+>>> predict("https://docs.python.org/3/library/json.html")
+{'label': 'clean', 'probability': 0.022556390977443608}
+>>> predict("https://www.PayPal-secure.login.tk/webscr?cmd=x")
+{'label': 'phishing', 'probability': 0.9921259842519685}
+>>> predict("http://paypal.com.account-verify.secure-login.xyz/webscr/update.php?cmd=_login")
+{'label': 'phishing', 'probability': 0.9996756406097956}
 ```
-These are actual outputs of the delivered model (run `v3_20261109T0956_visitor-platform`). A URL is labelled phishing when its probability is above about 0.935 (1% of legitimate training URLs reach that score). The probability refers to a population that is half phishing, like the supplied data, not to real traffic. Invalid input (not a string, empty, longer than 8,192 characters, or not readable as a URL) returns `clean` with probability 0, meaning "no evidence", not "safe".
 
-**From the command line** (`deliverables/predict.py`, works from any folder without setting `PYTHONPATH`): one JSON line per URL.
-```bash
-$ cd deliverables
-$ ../.venv/bin/python predict.py "https://www.wikipedia.org/" "https://www.PayPal-secure.login.tk/webscr?cmd=x"
-{"url": "https://www.wikipedia.org/", "label": "clean", "probability": 0.012004801920768308}
-{"url": "https://www.PayPal-secure.login.tk/webscr?cmd=x", "label": "phishing", "probability": 0.9978070175438597}
+### Command line
+One JSON line per URL:
+```console
+$ python deliverables/predict.py "https://www.wikipedia.org/" "https://www.PayPal-secure.login.tk/webscr?cmd=x"
+{"url": "https://www.wikipedia.org/", "label": "clean", "probability": 0.00391304347826087}
+{"url": "https://www.PayPal-secure.login.tk/webscr?cmd=x", "label": "phishing", "probability": 0.9921259842519685}
 ```
-Further options: `--vote URL` shows the vote of every model in the average, `--best URL` uses only the best single model, and `--test -n 50 --seed 1` scores a random sample of unseen URLs from a public dataset and saves the result to `deliverables/results/` (see `deliverables/README.md`).
 
-## Commands
+| option | effect |
+|---|---|
+| `--vote URL ...` | every model in the ensemble votes at its own threshold; majority label, calibrated probability and the individual votes |
+| `--best URL ...` | only the best single model (XGBoost): its raw probability and label |
+| `--test [-n 50] [--seed 1]` | scores a random sample of unseen URLs from a public dataset and saves the results to `deliverables/results/` |
+
+`--vote` and `--best` combine with `--test` and are mutually exclusive. With `--vote`, `label` is the majority of the four models (XGBoost, MLP, random forest, parts model, each at its own 1%-FPR threshold), `probability` is the calibrated ensemble probability, and `votes` lists each model's label and raw probability. With `--best`, the raw (uncalibrated) XGBoost probability and its label are returned, plus `"model"`.
+
+### `--test` sample data
+`deliverables/data/unseen_pool.csv` (5,000 URLs: 1,000 phishing, 4,000 neutral; columns `url,label`, 1 = phishing) is a seeded random subset of the Kaggle dataset
+[taruntiwarihp/phishing-site-urls](https://www.kaggle.com/datasets/taruntiwarihp/phishing-site-urls) (549,346 URLs; Open Database License, ODbL; the "D1" set of Jalil et al. 2023).
+Before sampling, every URL whose normalised form (lower case, no scheme, no leading `www.`, no trailing slash) appears in `train.csv` (434 URLs), `test.csv` (140) or `external_test.csv` (13) was removed, as were URLs with conflicting labels and duplicates (501,069 unique left).
+Hosts still overlap: 3.9% of phishing and 27.3% of neutral pool rows share a registrable domain with the supplied sets. Provenance: `deliverables/data/unseen_pool.json`; rebuild with `PYTHONPATH=src python src/tools/build_unseen_pool.py phishing_site_urls.csv`.
+
+Each `--test` run draws `-n` URLs (default 50): ceil(5% of n) phishing (3 for 50), the rest neutral; `--seed` makes the draw repeatable.
+The URLs have **no scheme** and are scored exactly as written. "Neutral" means ordinary pages, and 50 URLs are too few to estimate rates.
+On the whole pool at the deployed threshold: AUC 0.983, recall 0.76, false-positive rate 0.6%, precision 0.97 at the pool's 20% phishing share. The pool's source is one of the public collections in the training data, but none of its URLs was trained on.
+
+Every run writes `deliverables/results/test_<timestamp>_n<N>_seed<S>.csv` (`url,truth,prediction,probability,correct`) and a `.json` with the counts, seed, threshold and model run.
+Analyse them with `PYTHONPATH=src python -m tools.error_analysis deliverables/results/<file>.csv`.
+
+### Interpreting the output
+* A URL is labelled `phishing` when its calibrated probability is above about 0.944, the score reached by 1% of the legitimate training URLs (out of fold).
+* The probability refers to a population that is half phishing, like the training data, not to real traffic, where phishing is far rarer. Use the output to warn or rank, not to block.
+* Invalid input (not a string, empty, longer than 8,192 characters, or not readable as a URL) returns `{"label": "clean", "probability": 0.0}`, meaning "no evidence", not "safe".
+
+The outputs above come from the delivered model (run `v3_20261109T1148_parts-train-extra4`).
+
+## Development
+The training, test and analysis scripts import from `src/`; set the path once per shell:
 ```bash
-PYTHONPATH=src .venv/bin/python src/pipeline.py                # reproduce everything, about 30 min on CPU:
+export PYTHONPATH=src
+```
+```bash
+python src/pipeline.py                  # reproduce everything (~30 min on CPU):
 #   tests -> features -> train -> verify -> promote -> smoke -> evidence -> predictions -> report
-#   (Report.md + Report.pdf, deliverables/predictions.csv, src/models/results/{runID}/, docs/report/*.json)
-PYTHONPATH=src .venv/bin/python src/pipeline.py --only report  # rebuild Report.md / Report.pdf from the last run (after report-only edits)
-PYTHONPATH=src .venv/bin/python -c "from predict import predict; print(predict('https://www.PayPal-secure.login.tk/webscr?cmd=x'))"
-PYTHONPATH=src .venv/bin/python deliverables/predict.py "https://example.com/login"     # command-line wrapper
+#   writes src/models/results/{runID}/, deliverables/predictions.csv, docs/report/*.json, Report.md, Report.pdf
+python src/pipeline.py --only report    # rebuild Report.md / Report.pdf from the last run (after report-only edits)
+
 # single checks (all are also stages of the pipeline)
-PYTHONPATH=src .venv/bin/python src/grammar/check_grammar.py         # grammar, word lexers and visitor assertions
-PYTHONPATH=src .venv/bin/python src/tests/test_features.py           # one test per feature column on random URLs built from known components
-PYTHONPATH=src .venv/bin/python src/tests/test_predict_contract.py   # predict() on invalid and unusual inputs
-PYTHONPATH=src .venv/bin/python -m tools.check_visitor               # visitor vs the frozen earlier extractor (the tests stage builds the oracle if missing)
+python src/grammar/check_grammar.py         # grammar, word lexers and visitor assertions
+python src/tests/test_features.py           # one test per feature column on URLs built from known components
+python src/tests/test_predict_contract.py   # predict() on invalid and unusual inputs
+python -m tools.check_visitor               # visitor vs the frozen earlier extractor (the tests stage builds the oracle if missing)
 ```
-All Python code lives in `src/`; run it with `PYTHONPATH=src` (or `cd src`) so `from predict import predict` works. `src/predict.py` loads the latest run in `src/models/results/` (pointer file `LATEST`); nothing is trained or downloaded.
+
+Regenerating the parser after a grammar change (the ANTLR 4.13.2 jar is in `src/grammar/`):
+```bash
+cd src/grammar
+java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 -visitor -no-listener -Xexact-output-dir -o ../urlfeat/parser UrlLexer.g4 UrlParser.g4
+python gen_words.py                         # word-list lexers, after editing src/lists/
+```
 
 ## Pipeline
 
