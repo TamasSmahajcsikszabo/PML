@@ -1,0 +1,21 @@
+lexer only    ms/URL 0.174
+lex+parse     ms/URL 0.784
+structure()   ms/URL 0.829
+row (all 141) ms/URL 1.271
+parts (struct+part feats) ms/URL 0.857
+train rejected by grammar: 0 of 8651
+test rejected by grammar: 0 of 2858
+external_test rejected by grammar: 0 of 2858
+[(('domain', 'tld'), 2473), (('domain', 'platform'), 267), (('domain', 'icann2'), 226), (('ipv4', ''), 34)]
+uses tree pieces    67
+string only         39
+tree                35
+20261104T1518_nine-models importance share: {'string only': 0.455, 'tree': 0.241, 'uses tree pieces': 0.304} kept columns: {'uses tree pieces': 67, 'string only': 39, 'tree': 35}
+v2_20261104T1749_corr-filter-0.75 importance share: {'string only': 0.365, 'tree': 0.237, 'uses tree pieces': 0.398} kept columns: {'uses tree pieces': 42, 'string only': 28, 'tree': 18}
+URLs 14367 disagreements split_url vs tree: {'path': 0, 'query': 0, 'frag': 0, 'auth': 0}
+[]
+all 141                                    cols 141  CV AUC 0.9700  test 0.9807  external 0.9042
+without the 35 tree columns                cols 106  CV AUC 0.9635  test 0.9744  external 0.8788
+string-only 39                             cols  39  CV AUC 0.9309  test 0.9537  external 0.8318
+tree 35 only                               cols  35  CV AUC 0.9084  test 0.9439  external 0.9119
+tree + uses-tree 102 (no string-only)      cols 102  CV AUC 0.9658  test 0.9783  external 0.9180

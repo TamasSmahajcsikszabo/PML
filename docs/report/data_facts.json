@@ -1,0 +1,277 @@
+{
+ "sets": {
+  "train": {
+   "rows": 8651,
+   "phishing_share": 0.500520171078488,
+   "phishing": {
+    "n": 4330,
+    "https": 0.330715935334873,
+    "no_scheme": 0.0,
+    "has_path": 0.8034642032332564,
+    "has_query": 0.23833718244803695,
+    "www": 0.20854503464203233,
+    "ip_host": 0.019399538106235566,
+    "median_len": 55.0,
+    "p90_len": 129.0
+   },
+   "legitimate": {
+    "n": 4321,
+    "https": 0.4406387410321685,
+    "no_scheme": 0.0,
+    "has_path": 0.618838231890766,
+    "has_query": 0.03401990280027772,
+    "www": 0.6591066882666049,
+    "ip_host": 0.0,
+    "median_len": 42.0,
+    "p90_len": 80.0
+   }
+  },
+  "test": {
+   "rows": 2858,
+   "phishing_share": 0.5,
+   "phishing": {
+    "n": 1429,
+    "https": 0.344296710986704,
+    "no_scheme": 0.0,
+    "has_path": 0.7928621413575927,
+    "has_query": 0.22883135059482154,
+    "www": 0.2085374387683695,
+    "ip_host": 0.009097270818754374,
+    "median_len": 54.0,
+    "p90_len": 128.0
+   },
+   "legitimate": {
+    "n": 1429,
+    "https": 0.456962911126662,
+    "no_scheme": 0.0,
+    "has_path": 0.5976207137858642,
+    "has_query": 0.032890132960111965,
+    "www": 0.6850944716585025,
+    "ip_host": 0.0,
+    "median_len": 40.0,
+    "p90_len": 77.0
+   }
+  },
+  "external_test": {
+   "rows": 2858,
+   "phishing_share": 0.5,
+   "phishing": {
+    "n": 1429,
+    "https": 0.47515745276417076,
+    "no_scheme": 0.0,
+    "has_path": 0.27991602519244224,
+    "has_query": 0.055283414975507345,
+    "www": 0.42197340797760674,
+    "ip_host": 0.004198740377886634,
+    "median_len": 35.0,
+    "p90_len": 80.0
+   },
+   "legitimate": {
+    "n": 1429,
+    "https": 1.0,
+    "no_scheme": 0.0,
+    "has_path": 0.0,
+    "has_query": 0.0,
+    "www": 1.0,
+    "ip_host": 0.0,
+    "median_len": 27.0,
+    "p90_len": 34.0
+   }
+  }
+ },
+ "train_issues": {
+  "rows": 8651,
+  "exact_duplicate_rows": 30,
+  "rows_repeating_an_earlier_url": 80,
+  "urls_with_conflicting_labels_exact": 50,
+  "rows_of_conflicting_urls_exact": 100,
+  "keys_with_conflicting_labels_task_norm": 50,
+  "rows_of_conflicting_keys_task_norm": 107,
+  "extra_rows_duplicated_under_task_norm": 276,
+  "rows_without_scheme": 0,
+  "hosts_in_train": 5145,
+  "largest_host_groups": {
+   "blogspot.com": 289,
+   "duilawyeryork.com": 265,
+   "appspot.com": 201,
+   "wikipedia.org": 134,
+   "google.com": 113
+  },
+  "rows_in_hosts_with_5_or_more_rows": 2736
+ },
+ "overlap": {
+  "test": {
+   "exact": {
+    "share_of_rows": 0.0,
+    "phishing": 0.0,
+    "legitimate": 0.0
+   },
+   "task_norm": {
+    "share_of_rows": 0.05108467459762071,
+    "phishing": 0.10146955913226033,
+    "legitimate": 0.0006997900629811056
+   },
+   "norm_no_query": {
+    "share_of_rows": 0.0979706088173548,
+    "phishing": 0.17844646606018194,
+    "legitimate": 0.01749475157452764
+   },
+   "host_first_segment": {
+    "share_of_rows": 0.26731980405878236,
+    "phishing": 0.35899230230930723,
+    "legitimate": 0.17564730580825752
+   },
+   "registrable_host": {
+    "share_of_rows": 0.5171448565430371,
+    "phishing": 0.6403079076277117,
+    "legitimate": 0.3939818054583625
+   },
+   "task_norm_label_agreement": 1.0
+  },
+  "external_test": {
+   "exact": {
+    "share_of_rows": 0.0,
+    "phishing": 0.0,
+    "legitimate": 0.0
+   },
+   "task_norm": {
+    "share_of_rows": 0.0,
+    "phishing": 0.0,
+    "legitimate": 0.0
+   },
+   "norm_no_query": {
+    "share_of_rows": 0.0006997900629811056,
+    "phishing": 0.0006997900629811056,
+    "legitimate": 0.0006997900629811056
+   },
+   "host_first_segment": {
+    "share_of_rows": 0.019244226731980407,
+    "phishing": 0.03778866340097971,
+    "legitimate": 0.0006997900629811056
+   },
+   "registrable_host": {
+    "share_of_rows": 0.22918124562631212,
+    "phishing": 0.42197340797760674,
+    "legitimate": 0.0363890832750175
+   },
+   "task_norm_label_agreement": null
+  },
+  "test_vs_external": {
+   "exact": 0.0,
+   "task_norm": 0.0,
+   "norm_no_query": 0.0,
+   "host_first_segment": 0.0017494751574527643,
+   "registrable_host": 0.10601819454163751
+  }
+ },
+ "feature_shares": {
+  "train": {
+   "phishing": {
+    "reg_popular": 0.13163972286374134,
+    "https": 0.330715935334873,
+    "www": 0.20854503464203233,
+    "host_ipv4": 0.019399538106235566,
+    "tld_suspicious": 0.029330254041570438,
+    "is_shortener": 0.015242494226327945,
+    "sfx_platform": 0.13903002309468823,
+    "emb_domain": 0.08775981524249422,
+    "has_query": 0.2397228637413395,
+    "suspicious_phrase": 0.2491916859122402,
+    "brand_in_path_or_query": 0.057736720554272515,
+    "digit_rate_host_gt_0.1": 0.14249422632794456,
+    "two_or_more_subdomains": 0.08660508083140878
+   },
+   "legitimate": {
+    "reg_popular": 0.3922703077991206,
+    "https": 0.4406387410321685,
+    "www": 0.658412404535987,
+    "host_ipv4": 0.0,
+    "tld_suspicious": 0.0011571395510298543,
+    "is_shortener": 0.00023142791020597085,
+    "sfx_platform": 0.026845637583892617,
+    "emb_domain": 0.007637121036797038,
+    "has_query": 0.034482758620689655,
+    "suspicious_phrase": 0.026845637583892617,
+    "brand_in_path_or_query": 0.004859986114325388,
+    "digit_rate_host_gt_0.1": 0.012034251330710484,
+    "two_or_more_subdomains": 0.0018514232816477668
+   }
+  },
+  "test": {
+   "phishing": {
+    "reg_popular": 0.15395381385584325,
+    "https": 0.344296710986704,
+    "www": 0.2085374387683695,
+    "host_ipv4": 0.009097270818754374,
+    "tld_suspicious": 0.018894331700489854,
+    "is_shortener": 0.01819454163750875,
+    "sfx_platform": 0.1350594821553534,
+    "emb_domain": 0.0734779566130161,
+    "has_query": 0.23093072078376486,
+    "suspicious_phrase": 0.25192442267319803,
+    "brand_in_path_or_query": 0.055283414975507345,
+    "digit_rate_host_gt_0.1": 0.12386284114765571,
+    "two_or_more_subdomains": 0.08397480755773268
+   },
+   "legitimate": {
+    "reg_popular": 0.3722883135059482,
+    "https": 0.456962911126662,
+    "www": 0.6836948915325403,
+    "host_ipv4": 0.0,
+    "tld_suspicious": 0.0006997900629811056,
+    "is_shortener": 0.0006997900629811056,
+    "sfx_platform": 0.02729181245626312,
+    "emb_domain": 0.005598320503848845,
+    "has_query": 0.032890132960111965,
+    "suspicious_phrase": 0.02099370188943317,
+    "brand_in_path_or_query": 0.00489853044086774,
+    "digit_rate_host_gt_0.1": 0.023792862141357594,
+    "two_or_more_subdomains": 0.0
+   }
+  },
+  "external_test": {
+   "phishing": {
+    "reg_popular": 0.1112666200139958,
+    "https": 0.47515745276417076,
+    "www": 0.417074877536739,
+    "host_ipv4": 0.004198740377886634,
+    "tld_suspicious": 0.11896431070678797,
+    "is_shortener": 0.01119664100769769,
+    "sfx_platform": 0.2729181245626312,
+    "emb_domain": 0.026592022393282014,
+    "has_query": 0.05668299510146956,
+    "suspicious_phrase": 0.07627711686494051,
+    "brand_in_path_or_query": 0.013296011196641007,
+    "digit_rate_host_gt_0.1": 0.23792862141357593,
+    "two_or_more_subdomains": 0.04058782365290413
+   },
+   "legitimate": {
+    "reg_popular": 0.06857942617214835,
+    "https": 1.0,
+    "www": 1.0,
+    "host_ipv4": 0.0,
+    "tld_suspicious": 0.005598320503848845,
+    "is_shortener": 0.0006997900629811056,
+    "sfx_platform": 0.0,
+    "emb_domain": 0.0,
+    "has_query": 0.0,
+    "suspicious_phrase": 0.0027991602519244225,
+    "brand_in_path_or_query": 0.0,
+    "digit_rate_host_gt_0.1": 0.01119664100769769,
+    "two_or_more_subdomains": 0.00489853044086774
+   }
+  }
+ },
+ "training_rows": 43255,
+ "training_sources": {
+  "b_commoncrawl": 2680,
+  "b_feeds": 3471,
+  "b_tranco": 1545,
+  "ebbu2017": 6007,
+  "hari_kaggle": 6082,
+  "kaggle_d1": 6066,
+  "lakh_kaggle": 6124,
+  "malibari_benign": 2629,
+  "task_train": 8651
+ }
+}

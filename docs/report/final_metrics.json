@@ -1,0 +1,606 @@
+{
+ "run": "v3_20261109T1148_parts-train-extra4",
+ "candidate": "xgboost+blend+parts_mean",
+ "threshold_raw": 0.8947340215762304,
+ "threshold_calibrated": 0.9435897435897436,
+ "prevalence": 0.001,
+ "sets": {
+  "train_oof": {
+   "n": 43255,
+   "auc": 0.9811938561817942,
+   "tp": 15446,
+   "fp": 217,
+   "fn": 6186,
+   "tn": 21406,
+   "recall": 0.7140347633136095,
+   "fpr": 0.010035610229847848,
+   "precision": 0.9861456936729873,
+   "accuracy": 0.8519708704196046,
+   "precision_at_prevalence": 0.06648610185473042,
+   "recall_at_1pct_fpr_on_this_set": 0.7140347633136095,
+   "ece_calibrated_vs_set": 1.489195234972872e-17,
+   "ci": {
+    "auc": [
+     0.9766478159034815,
+     0.9844705253515528
+    ],
+    "recall": [
+     0.6967479049319942,
+     0.7304966338060228
+    ],
+    "fpr": [
+     0.006160845688833001,
+     0.01690758555393065
+    ],
+    "precision_at_prevalence": [
+     0.040688488569425536,
+     0.10327284675084183
+    ]
+   },
+   "by_shape": {
+    "path-less": {
+     "n": 8928,
+     "auc": 0.9531642587230456,
+     "recall": 0.5283608753907995,
+     "fpr": 0.017977528089887642,
+     "share_phishing": 0.5015681003584229
+    },
+    "with path/query": {
+     "n": 34327,
+     "auc": 0.9861431484837946,
+     "recall": 0.7625043721580972,
+     "fpr": 0.007977639317533338,
+     "share_phishing": 0.49972324991988815
+    }
+   },
+   "mixed_domains": {
+    "n_domains": 125,
+    "n_rows": 3276,
+    "mixed": {
+     "n": 3276,
+     "auc": 0.9205580517076666,
+     "recall": 0.6308962264150944,
+     "fpr": 0.05379746835443038
+    },
+    "single": {
+     "n": 39979,
+     "auc": 0.9854481579491734,
+     "recall": 0.721107544141252,
+     "fpr": 0.006585840443047448
+    },
+    "largest": {
+     "blogspot.com": {
+      "n": 492,
+      "auc": 0.9058164619980087,
+      "recall": 0.8956521739130435,
+      "fpr": 0.25190839694656486
+     },
+     "duilawyeryork.com": {
+      "n": 265,
+      "auc": 0.41634980988593157,
+      "recall": 1.0,
+      "fpr": 1.0
+     },
+     "youtube.com": {
+      "n": 264,
+      "auc": 0.9923954372623573,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "facebook.com": {
+      "n": 223,
+      "auc": 0.6013513513513513,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "appspot.com": {
+      "n": 219,
+      "auc": 0.7828638497652582,
+      "recall": 0.9671361502347418,
+      "fpr": 0.6666666666666666
+     },
+     "google.com": {
+      "n": 203,
+      "auc": 0.9288888888888889,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "yahoo.com": {
+      "n": 141,
+      "auc": 1.0,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "wordpress.com": {
+      "n": 107,
+      "auc": 0.6226415094339622,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "web.app": {
+      "n": 96,
+      "auc": 1.0,
+      "recall": 0.6842105263157895,
+      "fpr": 0.0
+     },
+     "tumblr.com": {
+      "n": 81,
+      "auc": 0.8436293436293436,
+      "recall": 0.14285714285714285,
+      "fpr": 0.0
+     },
+     "firebaseapp.com": {
+      "n": 77,
+      "auc": 0.8533333333333333,
+      "recall": 0.6,
+      "fpr": 0.0
+     },
+     "weebly.com": {
+      "n": 75,
+      "auc": 0.8559322033898304,
+      "recall": 0.01694915254237288,
+      "fpr": 0.0
+     },
+     "github.io": {
+      "n": 70,
+      "auc": 0.6065759637188208,
+      "recall": 0.5714285714285714,
+      "fpr": 0.2857142857142857
+     },
+     "twitter.com": {
+      "n": 68,
+      "auc": 0.9531615925058547,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "webcindario.com": {
+      "n": 66,
+      "auc": 0.7578125,
+      "recall": 0.609375,
+      "fpr": 0.5
+     },
+     "esy.es": {
+      "n": 55,
+      "auc": 0.8703703703703703,
+      "recall": 0.6111111111111112,
+      "fpr": 0.0
+     },
+     "techtarget.com": {
+      "n": 52,
+      "auc": 0.5196078431372548,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "tripod.com": {
+      "n": 36,
+      "auc": 0.8923076923076924,
+      "recall": 0.4,
+      "fpr": 0.0
+     },
+     "office.com": {
+      "n": 26,
+      "auc": 1.0,
+      "recall": 0.05263157894736842,
+      "fpr": 0.0
+     },
+     "computerhope.com": {
+      "n": 24,
+      "auc": 0.4565217391304348,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "my.id": {
+      "n": 24,
+      "auc": 1.0,
+      "recall": 0.391304347826087,
+      "fpr": 0.0
+     },
+     "altervista.org": {
+      "n": 23,
+      "auc": 0.5476190476190476,
+      "recall": 0.2857142857142857,
+      "fpr": 0.0
+     },
+     "go.id": {
+      "n": 23,
+      "auc": 1.0,
+      "recall": 0.8095238095238095,
+      "fpr": 0.0
+     },
+     "quora.com": {
+      "n": 22,
+      "auc": 0.023809523809523836,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "angelfire.com": {
+      "n": 21,
+      "auc": 0.19999999999999996,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "free.fr": {
+      "n": 20,
+      "auc": 0.9444444444444444,
+      "recall": 0.16666666666666666,
+      "fpr": 0.0
+     },
+     "googleapis.com": {
+      "n": 19,
+      "auc": 1.0,
+      "recall": 0.47058823529411764,
+      "fpr": 0.0
+     },
+     "hol.es": {
+      "n": 18,
+      "auc": 1.0,
+      "recall": 0.9090909090909091,
+      "fpr": 0.0
+     },
+     "wisegeek.com": {
+      "n": 18,
+      "auc": 0.2941176470588235,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "azurewebsites.net": {
+      "n": 17,
+      "auc": 1.0,
+      "recall": 0.4375,
+      "fpr": 0.0
+     },
+     "in.ua": {
+      "n": 17,
+      "auc": 1.0,
+      "recall": 1.0,
+      "fpr": 0.0
+     },
+     "amazonaws.com": {
+      "n": 16,
+      "auc": 0.8958333333333334,
+      "recall": 0.8333333333333334,
+      "fpr": 0.0
+     },
+     "blogspot.ru": {
+      "n": 15,
+      "auc": 1.0,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "comcast.net": {
+      "n": 15,
+      "auc": 0.8461538461538461,
+      "recall": 0.15384615384615385,
+      "fpr": 0.0
+     },
+     "ipfs.io": {
+      "n": 14,
+      "auc": 1.0,
+      "recall": 0.6666666666666666,
+      "fpr": 0.0
+     },
+     "live.com": {
+      "n": 13,
+      "auc": 1.0,
+      "recall": 0.08333333333333333,
+      "fpr": 0.0
+     },
+     "sch.id": {
+      "n": 13,
+      "auc": 1.0,
+      "recall": 0.9090909090909091,
+      "fpr": 0.0
+     },
+     "wikiwand.com": {
+      "n": 13,
+      "auc": 0.375,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "fc2.com": {
+      "n": 12,
+      "auc": 0.8181818181818182,
+      "recall": 0.18181818181818182,
+      "fpr": 0.0
+     },
+     "ne.jp": {
+      "n": 12,
+      "auc": 1.0,
+      "recall": 1.0,
+      "fpr": 0.0
+     },
+     "instagram.com": {
+      "n": 11,
+      "auc": 0.9444444444444444,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "vk.com": {
+      "n": 11,
+      "auc": 0.8888888888888888,
+      "recall": 0.0,
+      "fpr": 0.0
+     },
+     "at.ua": {
+      "n": 10,
+      "auc": 1.0,
+      "recall": 0.3333333333333333,
+      "fpr": 0.0
+     }
+    },
+    "share_of_false_positives": 0.391705069124424,
+    "share_of_false_negatives": 0.10119624959586163,
+    "share_of_rows": 0.07573690902785805,
+    "pair_auc_within_domain": 0.8981043606403644,
+    "same_page_both_labels": 50,
+    "same_page_phish_higher": 0.06,
+    "same_page_identical_score": 0.9
+   }
+  },
+  "test": {
+   "n": 2858,
+   "auc": 0.9801480479579009,
+   "tp": 1002,
+   "fp": 8,
+   "fn": 427,
+   "tn": 1421,
+   "recall": 0.7011896431070679,
+   "fpr": 0.005598320503848845,
+   "precision": 0.9920792079207921,
+   "accuracy": 0.8477956613016095,
+   "precision_at_prevalence": 0.11140760507004671,
+   "recall_at_1pct_fpr_on_this_set": 0.7466759972008398,
+   "ece_calibrated_vs_set": 0.009761872382946363,
+   "ci": {
+    "auc": [
+     0.9719764101916895,
+     0.986532483027468
+    ],
+    "recall": [
+     0.6495109255520355,
+     0.7503513071029679
+    ],
+    "fpr": [
+     0.0014705342489418675,
+     0.009817809581805205
+    ],
+    "precision_at_prevalence": [
+     0.06473958796234558,
+     0.3197024666018508
+    ]
+   },
+   "share_hosts_seen_in_train": 0.5171448565430371,
+   "auc_seen_hosts": 0.9870716011996622,
+   "auc_unseen_hosts": 0.9676326147320747,
+   "by_shape": {
+    "path-less": {
+     "n": 844,
+     "auc": 0.9502094519607654,
+     "recall": 0.5091575091575091,
+     "fpr": 0.0070052539404553416,
+     "share_phishing": 0.3234597156398104
+    },
+    "with path/query": {
+     "n": 2014,
+     "auc": 0.988579903372291,
+     "recall": 0.7465397923875432,
+     "fpr": 0.004662004662004662,
+     "share_phishing": 0.573982125124131
+    }
+   },
+   "mixed_domains": {
+    "n_domains": 5,
+    "n_rows": 172,
+    "mixed": {
+     "n": 172,
+     "auc": 0.857843137254902,
+     "recall": 0.5098039215686274,
+     "fpr": 0.02857142857142857
+    },
+    "single": {
+     "n": 2686,
+     "auc": 0.9844767613049402,
+     "recall": 0.7159005275056518,
+     "fpr": 0.004415011037527594
+    },
+    "largest": {
+     "blogspot.com": {
+      "n": 96,
+      "auc": 0.8319444444444445,
+      "recall": 0.5,
+      "fpr": 0.05555555555555555
+     },
+     "google.com": {
+      "n": 40,
+      "auc": 0.9307359307359306,
+      "recall": 0.6666666666666666,
+      "fpr": 0.0
+     },
+     "tumblr.com": {
+      "n": 24,
+      "auc": 0.7222222222222222,
+      "recall": 0.0,
+      "fpr": 0.0
+     }
+    },
+    "share_of_false_positives": 0.25,
+    "share_of_false_negatives": 0.117096018735363,
+    "share_of_rows": 0.06018194541637509,
+    "pair_auc_within_domain": 0.8357852882703777,
+    "same_page_both_labels": 0
+   }
+  },
+  "external_test": {
+   "n": 2858,
+   "auc": 0.98534652340477,
+   "tp": 728,
+   "fp": 1,
+   "fn": 701,
+   "tn": 1428,
+   "recall": 0.509447165850245,
+   "fpr": 0.0006997900629811056,
+   "precision": 0.9986282578875172,
+   "accuracy": 0.7543736878936319,
+   "precision_at_prevalence": 0.4215402431962942,
+   "recall_at_1pct_fpr_on_this_set": 0.7676696990902729,
+   "ece_calibrated_vs_set": 0.09691049488412458,
+   "ci": {
+    "auc": [
+     0.9804336827319161,
+     0.9892229148850922
+    ],
+    "recall": [
+     0.43851066601281147,
+     0.5671734691296003
+    ],
+    "fpr": [
+     0.0,
+     0.002142933782955242
+    ],
+    "precision_at_prevalence": [
+     0.18597803744237168,
+     1.0
+    ]
+   },
+   "share_hosts_seen_in_train": 0.22918124562631212,
+   "auc_seen_hosts": 0.9955670366118127,
+   "auc_unseen_hosts": 0.9787023409489345,
+   "by_shape": {
+    "path-less": {
+     "n": 2447,
+     "auc": 0.9829383208613056,
+     "recall": 0.42534381139489197,
+     "fpr": 0.0006997900629811056,
+     "share_phishing": 0.4160196158561504
+    }
+   },
+   "mixed_domains": {
+    "n_domains": 0,
+    "n_rows": 0,
+    "single": {
+     "n": 2858,
+     "auc": 0.98534652340477,
+     "recall": 0.509447165850245,
+     "fpr": 0.0006997900629811056
+    },
+    "share_of_false_positives": 0.0,
+    "share_of_false_negatives": 0.0,
+    "share_of_rows": 0.0,
+    "pair_auc_within_domain": null,
+    "same_page_both_labels": 0
+   }
+  }
+ },
+ "parent_models": {
+  "log_reg": {
+   "cv_auc_oof": 0.955444,
+   "oof_threshold_1pct_fpr": 0.954197,
+   "test_auc": 0.9431,
+   "test_recall": 0.482855,
+   "test_fpr": 0.00349895,
+   "external_test_auc": 0.96769,
+   "external_test_recall": 0.294612,
+   "external_test_fpr": 0.00069979
+  },
+  "svm": {
+   "cv_auc_oof": 0.955321,
+   "oof_threshold_1pct_fpr": 0.875123,
+   "test_auc": 0.942521,
+   "test_recall": 0.502449,
+   "test_fpr": 0.00489853,
+   "external_test_auc": 0.968895,
+   "external_test_recall": 0.320504,
+   "external_test_fpr": 0.00069979
+  },
+  "naive_bayes": {
+   "cv_auc_oof": 0.894846,
+   "oof_threshold_1pct_fpr": 0.967724,
+   "test_auc": 0.882952,
+   "test_recall": 0.154654,
+   "test_fpr": 0.0,
+   "external_test_auc": 0.914037,
+   "external_test_recall": 0.0909727,
+   "external_test_fpr": 0.0
+  },
+  "knn": {
+   "cv_auc_oof": 0.954352,
+   "oof_threshold_1pct_fpr": 0.888546,
+   "test_auc": 0.959752,
+   "test_recall": 0.482155,
+   "test_fpr": 0.00419874,
+   "external_test_auc": 0.970292,
+   "external_test_recall": 0.405878,
+   "external_test_fpr": 0.00349895
+  },
+  "decision_tree": {
+   "cv_auc_oof": 0.94037,
+   "oof_threshold_1pct_fpr": 0.957994,
+   "test_auc": 0.949164,
+   "test_recall": 0.431071,
+   "test_fpr": 0.00629811,
+   "external_test_auc": 0.973922,
+   "external_test_recall": 0.242827,
+   "external_test_fpr": 0.0
+  },
+  "adaboost": {
+   "cv_auc_oof": 0.968857,
+   "oof_threshold_1pct_fpr": 0.560765,
+   "test_auc": 0.96162,
+   "test_recall": 0.610917,
+   "test_fpr": 0.0174948,
+   "external_test_auc": 0.983445,
+   "external_test_recall": 0.449265,
+   "external_test_fpr": 0.0
+  },
+  "mlp": {
+   "cv_auc_oof": 0.978296,
+   "oof_threshold_1pct_fpr": 0.963127,
+   "test_auc": 0.973945,
+   "test_recall": 0.664101,
+   "test_fpr": 0.00839748,
+   "external_test_auc": 0.9688,
+   "external_test_recall": 0.540238,
+   "external_test_fpr": 0.00349895
+  },
+  "random_forest": {
+   "cv_auc_oof": 0.976561,
+   "oof_threshold_1pct_fpr": 0.832967,
+   "test_auc": 0.976633,
+   "test_recall": 0.688593,
+   "test_fpr": 0.0104969,
+   "external_test_auc": 0.967204,
+   "external_test_recall": 0.463961,
+   "external_test_fpr": 0.00139958
+  },
+  "xgboost": {
+   "cv_auc_oof": 0.980567,
+   "oof_threshold_1pct_fpr": 0.958597,
+   "test_auc": 0.980341,
+   "test_recall": 0.706788,
+   "test_fpr": 0.0104969,
+   "external_test_auc": 0.963064,
+   "external_test_recall": 0.506648,
+   "external_test_fpr": 0.00209937
+  },
+  "blend_top3": {
+   "cv_auc_oof": 0.981591,
+   "oof_threshold_1pct_fpr": 0.890359,
+   "test_auc": 0.980022,
+   "test_recall": 0.728481,
+   "test_fpr": 0.00979706,
+   "external_test_auc": 0.975826,
+   "external_test_recall": 0.526942,
+   "external_test_fpr": 0.00139958
+  },
+  "blend_top3_calibrated": {
+   "cv_auc_oof": 0.981823,
+   "oof_threshold_1pct_fpr": 0.936121,
+   "test_auc": 0.979885,
+   "test_recall": 0.762071,
+   "test_fpr": 0.0153954,
+   "external_test_auc": 0.975605,
+   "external_test_recall": 0.560532,
+   "external_test_fpr": 0.00279916
+  }
+ }
+}
